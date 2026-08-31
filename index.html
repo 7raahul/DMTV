@@ -1692,6 +1692,96 @@ header{
 }
 </style>
 
+
+<style id="cinevo-mobile-only-fix">
+@media (max-width: 700px) {
+  /* Mobile Trending: backdrop is a separate 16:9 block above metadata.
+     This intentionally does not alter the desktop Trending layout. */
+  .trending-card,
+  .trending-recommendation,
+  .trending-feature,
+  .trending-hero,
+  #trendingCard,
+  #trendingContainer .trending-card {
+    overflow: hidden !important;
+  }
+
+  .trending-card .backdrop,
+  .trending-recommendation .backdrop,
+  .trending-feature .backdrop,
+  .trending-hero .backdrop,
+  #trendingCard .backdrop,
+  #trendingContainer img {
+    position: relative !important;
+    inset: auto !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+    border-radius: 0 !important;
+  }
+
+  .trending-card .trending-content,
+  .trending-card .content,
+  .trending-recommendation .trending-content,
+  .trending-recommendation .content,
+  .trending-feature .trending-content,
+  .trending-hero .trending-content,
+  #trendingCard .trending-content {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 18px 18px 20px !important;
+    background: var(--card, #11151c) !important;
+  }
+}
+</style>
+
+
+<style id="cinevo-mobile-nav-css">
+#cinevoMobileNav{display:none}
+@media(max-width:700px){
+  #cinevoMobileNav{
+    position:fixed;
+    z-index:9999;
+    left:0;
+    right:0;
+    bottom:0;
+    height:72px;
+    padding:7px 10px max(7px,env(safe-area-inset-bottom));
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px;
+    background:rgba(13,18,27,.97);
+    border-top:1px solid var(--border,#252c38);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+  }
+  #cinevoMobileNav button{
+    appearance:none;
+    border:0;
+    background:transparent;
+    color:#c7ccd5;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:2px;
+    font:inherit;
+    font-size:11px;
+    line-height:1.15;
+    cursor:pointer;
+  }
+  #cinevoMobileNav .mobile-nav-icon{font-size:24px;line-height:1}
+  body{padding-bottom:78px}
+}
+</style>
+
 </head>
 
 <body>
@@ -4299,6 +4389,77 @@ window.openRandomPage=openRandomPage;
       btn.classList.toggle("active", btn.dataset.value === (state.filters.type || "all"));
     });
   });
+})();
+</script>
+
+
+<nav id="cinevoMobileNav" aria-label="Mobile navigation">
+  <button type="button" data-mobile-nav="home" onclick="goHome()">
+    <span class="mobile-nav-icon">🏠</span><span>Home</span>
+  </button>
+  <button type="button" data-mobile-nav="search" onclick="document.getElementById('searchInput')?.focus()">
+    <span class="mobile-nav-icon">⌕</span><span>Search</span>
+  </button>
+  <button type="button" data-mobile-nav="journey" onclick="document.getElementById('timelineBtn')?.click()">
+    <span class="mobile-nav-icon">◇</span><span>Watch Journey</span>
+  </button>
+  <button type="button" data-mobile-nav="random" onclick="document.getElementById('randomBtn')?.click()">
+    <span class="mobile-nav-icon">🎲</span><span>Pick for Me</span>
+  </button>
+</nav>
+
+
+<script id="cinevo-mobile-trending-fix">
+(function(){
+  function fixMobileTrending(){
+    if (window.innerWidth > 700) return;
+
+    var root = document.getElementById("trendingContainer") ||
+               document.getElementById("trendingCard") ||
+               document.querySelector(".trending-container");
+    if(!root) return;
+
+    var cards = root.querySelectorAll(
+      ".trending-card,.trending-recommendation,.trending-feature,.trending-hero,[class*='trending']"
+    );
+
+    cards.forEach(function(card){
+      if(card.dataset.mobileTrendingFixed === "1") return;
+
+      var img = card.querySelector("img");
+      if(!img) return;
+
+      var content = card.querySelector(
+        ".trending-content,.content,.trending-info,.hero-content,[class*='content']"
+      );
+
+      img.style.setProperty("position","relative","important");
+      img.style.setProperty("inset","auto","important");
+      img.style.setProperty("display","block","important");
+      img.style.setProperty("width","100%","important");
+      img.style.setProperty("height","auto","important");
+      img.style.setProperty("aspect-ratio","16 / 9","important");
+      img.style.setProperty("object-fit","cover","important");
+      img.style.setProperty("object-position","center","important");
+      img.style.setProperty("transform","none","important");
+
+      if(content){
+        content.style.setProperty("position","relative","important");
+        content.style.setProperty("inset","auto","important");
+        content.style.setProperty("width","100%","important");
+        content.style.setProperty("margin","0","important");
+        content.style.setProperty("background","var(--card,#11151c)","important");
+      }
+
+      card.style.setProperty("overflow","hidden","important");
+      card.dataset.mobileTrendingFixed="1";
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded",fixMobileTrending);
+  window.addEventListener("resize",fixMobileTrending);
+  new MutationObserver(function(){fixMobileTrending()})
+    .observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
