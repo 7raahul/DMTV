@@ -3,251 +3,242 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie & TV Show Discovery App</title>
+  <title>CineVo - Movie & TV Discovery</title>
   <style>
-    /* ============================================================
-       MOBILE-FIRST UI DESIGN & RESPONSIVE CSS
-    ============================================================ */
     :root {
-      --bg-primary: #121212;
-      --bg-secondary: #1e1e1e;
-      --bg-card: #252525;
+      --bg-main: #0f1015;
+      --bg-card: #181b22;
+      --bg-hover: #222631;
       --accent: #e50914;
       --text-main: #ffffff;
-      --text-muted: #aaaaaa;
-      --success: #2ecc71;
-      --border-radius: 12px;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --radius: 12px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: var(--bg-primary);
+      background-color: var(--bg-main);
       color: var(--text-main);
-      padding-bottom: 70px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .hidden { display: none !important; }
 
-    /* Header & Navbar */
-    header {
+    /* Navigation */
+    nav {
       position: sticky;
       top: 0;
-      z-index: 100;
-      background: rgba(18, 18, 18, 0.95);
-      backdrop-filter: blur(10px);
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .header-top {
+      z-index: 1000;
+      background: rgba(15, 16, 21, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      padding: 14px 24px;
     }
 
     .logo {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       color: var(--accent);
+      cursor: pointer;
+      letter-spacing: 0.5px;
     }
 
-    .global-media-buttons {
+    .nav-links {
       display: flex;
-      background: var(--bg-secondary);
-      border-radius: 20px;
-      padding: 3px;
+      gap: 20px;
+      align-items: center;
     }
 
-    .global-media-btn {
-      background: transparent;
+    .nav-link {
+      background: none;
       border: none;
       color: var(--text-muted);
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .global-media-btn.active {
-      background: var(--accent);
-      color: var(--text-main);
-    }
-
-    /* Search Bar */
-    .search-container {
-      position: relative;
-      margin-top: 8px;
-    }
-
-    #searchInput {
-      width: 100%;
-      background: var(--bg-secondary);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 10px 14px;
-      border-radius: var(--border-radius);
-      color: var(--text-main);
       font-size: 14px;
-      outline: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.2s;
     }
 
-    #searchSuggestions {
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+    }
+
+    /* Main Container */
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* Search Section */
+    .search-box-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 12px 18px;
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent);
+    }
+
+    .search-suggestions {
       position: absolute;
       top: 100%;
       left: 0;
       right: 0;
-      background: var(--bg-secondary);
-      border-radius: var(--border-radius);
-      margin-top: 4px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      z-index: 101;
-      max-height: 300px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-top: 6px;
+      max-height: 350px;
       overflow-y: auto;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .search-suggestion {
+    .suggestion-item {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 10px;
-      width: 100%;
-      background: none;
-      border: none;
-      color: var(--text-main);
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
     }
 
-    .search-suggestion img {
-      width: 40px;
-      height: 55px;
+    .suggestion-item:hover {
+      background: var(--bg-hover);
+    }
+
+    .suggestion-item img {
+      width: 36px;
+      height: 50px;
       object-fit: cover;
       border-radius: 4px;
     }
 
-    /* Filter Bar for Mobile */
-    .filters-wrapper {
+    /* Filters Bar */
+    .filters-bar {
       display: flex;
+      gap: 10px;
       overflow-x: auto;
-      gap: 8px;
-      padding: 12px 16px;
-      background: var(--bg-secondary);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
       scrollbar-width: none;
     }
-    .filters-wrapper::-webkit-scrollbar { display: none; }
+    .filters-bar::-webkit-scrollbar { display: none; }
 
-    .filter {
-      position: relative;
+    .filter-select {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
       flex-shrink: 0;
     }
 
-    .filter-btn {
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--text-main);
-      padding: 8px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    .filter-menu {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: var(--bg-secondary);
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-      padding: 20px;
-      max-height: 60vh;
-      overflow-y: auto;
-      z-index: 200;
-      box-shadow: 0 -10px 30px rgba(0,0,0,0.8);
+    /* Carousels & Sections */
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 14px;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .filter-menu button {
-      background: var(--bg-card);
-      border: none;
-      color: var(--text-main);
-      padding: 10px;
-      border-radius: 8px;
-      text-align: left;
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .filter-menu button.selected {
-      background: var(--accent);
-    }
-
-    /* Results Grid (2 Columns on Mobile) */
-    .results-section {
-      padding: 16px;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
-      font-size: 13px;
-      color: var(--text-muted);
+      justify-content: space-between;
     }
 
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+    .carousel-container {
+      position: relative;
+      margin-bottom: 32px;
     }
 
-    .movie-card {
+    .carousel {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      padding-bottom: 8px;
+      scrollbar-width: none;
+    }
+    .carousel::-webkit-scrollbar { display: none; }
+
+    /* Media Cards */
+    .media-card {
       background: var(--bg-card);
-      border-radius: var(--border-radius);
+      border-radius: var(--radius);
       overflow: hidden;
+      flex: 0 0 180px;
       display: flex;
       flex-direction: column;
       cursor: pointer;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .media-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.2);
     }
 
     .poster-wrap {
       position: relative;
       width: 100%;
       aspect-ratio: 2/3;
+      background: var(--bg-hover);
     }
 
-    .poster {
+    .poster-wrap img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
-    .poster-type {
+    .card-badge {
       position: absolute;
-      top: 6px;
-      right: 6px;
+      top: 8px;
+      right: 8px;
       background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
       font-size: 10px;
       padding: 2px 6px;
       border-radius: 4px;
+      font-weight: 600;
     }
 
-    .card-body {
+    .card-content {
       padding: 10px;
       display: flex;
       flex-direction: column;
+      gap: 4px;
       flex-grow: 1;
       justify-content: space-between;
     }
@@ -258,7 +249,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      margin-bottom: 4px;
     }
 
     .card-meta {
@@ -266,489 +256,637 @@
       justify-content: space-between;
       font-size: 11px;
       color: var(--text-muted);
-      margin-bottom: 8px;
     }
 
-    .card-actions {
-      display: flex;
-      gap: 6px;
+    /* Grid Layout for General Results */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
     }
 
-    .details-btn, .quick-btn {
-      background: var(--bg-secondary);
-      border: none;
-      color: var(--text-main);
-      padding: 6px;
-      border-radius: 6px;
-      font-size: 11px;
-      cursor: pointer;
-      text-align: center;
-    }
-    .details-btn { flex-grow: 1; }
-    .quick-btn { width: 30px; }
-
-    /* Detail Overlay Modal */
-    .detail-overlay {
+    /* Details View / Overlay Pages */
+    .page-view {
       position: fixed;
       inset: 0;
-      background: var(--bg-primary);
-      z-index: 300;
+      background: var(--bg-main);
+      z-index: 1100;
       overflow-y: auto;
+      display: none;
     }
 
-    .detail-hero {
+    .page-view.active {
+      display: block;
+    }
+
+    .hero-banner {
       position: relative;
       width: 100%;
-      min-height: 450px;
+      height: 450px;
+      background-size: cover;
+      background-position: center;
       display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 16px;
+      align-items: flex-end;
+      padding: 30px;
     }
 
-    .detail-bg {
+    .hero-banner::after {
+      content: '';
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 1;
+      background: linear-gradient(to top, var(--bg-main) 5%, rgba(15,16,21,0.6) 60%, rgba(15,16,21,0.3));
     }
 
-    .detail-bg-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, var(--bg-primary) 10%, rgba(18,18,18,0.8) 60%, rgba(18,18,18,0.4));
+    .hero-content {
+      position: relative;
       z-index: 2;
+      max-width: 1000px;
     }
 
-    .detail-main {
-      position: relative;
-      z-index: 3;
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1200;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .details-body {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px 20px;
       display: flex;
       flex-direction: column;
+      gap: 24px;
+    }
+
+    .action-row {
+      display: flex;
       gap: 12px;
     }
 
-    .detail-poster {
-      width: 100px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-
-    .detail-title {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .detail-overview {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    .detail-buttons {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-    }
-
-    .action-btn {
-      flex: 1;
-      background: var(--bg-secondary);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--text-main);
-      padding: 10px;
-      border-radius: var(--border-radius);
-      font-size: 13px;
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
       font-weight: 600;
       cursor: pointer;
     }
-    .action-btn.primary {
-      background: var(--accent);
-      border-color: var(--accent);
+
+    .btn-secondary {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
     }
 
-    /* Modals */
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
+    /* Cast & OTT rows */
+    .horizontal-scroll {
       display: flex;
-      align-items: flex-end;
-      z-index: 400;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
     }
 
-    .modal-content {
-      background: var(--bg-secondary);
-      width: 100%;
-      padding: 20px;
-      border-top-left-radius: 20px;
-      border-top-right-radius: 20px;
-    }
-
-    /* Loading / Empty States */
-    .loading, .empty {
+    .cast-card {
+      flex: 0 0 100px;
       text-align: center;
-      padding: 40px;
-      color: var(--text-muted);
-      font-size: 13px;
+    }
+
+    .cast-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 6px;
+    }
+
+    .cast-name {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .ott-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .ott-logo img {
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+    }
+
+    /* Episodes Section */
+    .episode-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .episode-item {
+      display: flex;
+      gap: 12px;
+      background: var(--bg-card);
+      padding: 10px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+
+    .episode-item img {
+      width: 120px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      nav { padding: 12px 16px; }
+      main { padding: 16px; }
+      .media-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .media-card { flex: 0 0 140px; }
+      .hero-banner { height: 320px; padding: 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header Section -->
-  <header>
-    <div class="header-top">
-      <div class="logo">🎬 MovieApp</div>
-      <div class="global-media-buttons">
-        <button class="global-media-btn active" data-value="movie" onclick="setMainMediaType('movie')">Movies</button>
-        <button class="global-media-btn" data-value="tv" onclick="setMainMediaType('tv')">TV Shows</button>
-        <button class="global-media-btn" data-value="all" onclick="setMainMediaType('all')">All</button>
+  <!-- Top Navbar -->
+  <nav>
+    <div class="logo" onclick="switchTab('home')">CineVo</div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="switchTab('home')">Home</button>
+      <button class="nav-link" onclick="switchTab('search')">Search</button>
+      <button class="nav-link" onclick="switchTab('pick')">Pick For Me</button>
+      <button class="nav-link" onclick="switchTab('journey')">Watch Journey</button>
+    </div>
+  </nav>
+
+  <!-- Main Dynamic View Container -->
+  <main id="appMain">
+    <!-- Home Content -->
+    <div id="homeView">
+      <div class="search-box-wrapper">
+        <input type="text" class="search-input" id="mainSearchInput" placeholder="Search movies, TV shows..." oninput="handleSearchInput(this.value)">
+        <div id="searchDropdown" class="search-suggestions hidden"></div>
+      </div>
+
+      <!-- Filters -->
+      <div class="filters-bar">
+        <select class="filter-select" id="filterType" onchange="applyFilters()">
+          <option value="all">All (Movies + TV)</option>
+          <option value="movie">Movies Only</option>
+          <option value="tv">TV Shows Only</option>
+        </select>
+        <select class="filter-select" id="filterGenre" onchange="applyFilters()">
+          <option value="">All Genres</option>
+        </select>
+        <select class="filter-select" id="filterCountry" onchange="applyFilters()">
+          <option value="">All Countries</option>
+          <option value="US">United States</option>
+          <option value="IN">India</option>
+          <option value="GB">United Kingdom</option>
+          <option value="KR">South Korea</option>
+        </select>
+        <select class="filter-select" id="filterYear" onchange="applyFilters()">
+          <option value="">All Years</option>
+        </select>
+      </div>
+
+      <!-- Filtered Results Grid (Hidden by default until filtered/searched) -->
+      <div id="filteredSection" class="hidden">
+        <div class="section-title">Results</div>
+        <div class="media-grid" id="filteredGrid"></div>
+      </div>
+
+      <!-- Trending Movies Carousel -->
+      <div class="section-title">Trending Movies</div>
+      <div class="carousel-container">
+        <div class="carousel" id="trendingMoviesCarousel"></div>
+      </div>
+
+      <!-- Trending TV Shows Carousel -->
+      <div class="section-title">Trending TV Shows</div>
+      <div class="carousel-container">
+        <div class="carousel" id="trendingTvCarousel"></div>
       </div>
     </div>
-    
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search movies, TV shows...">
-      <div id="searchSuggestions" class="hidden"></div>
-    </div>
-  </header>
 
-  <!-- Filter Bar -->
-  <div class="filters-wrapper">
-    <div class="filter" data-filter="type">
-      <button class="filter-btn" onclick="toggleMenu(this)">Type: <span id="typeLabel">Movies</span></button>
-      <div class="filter-menu hidden"></div>
+    <!-- Search View Tab -->
+    <div id="searchView" class="hidden">
+      <h2 style="margin-bottom: 16px;">Search Explorer</h2>
+      <input type="text" class="search-input" placeholder="Type to search movies & TV..." oninput="executeFullSearch(this.value)" style="margin-bottom: 20px;">
+      <div class="media-grid" id="fullSearchGrid"></div>
     </div>
-    <div class="filter" data-filter="year">
-      <button class="filter-btn" onclick="toggleMenu(this)">Year: <span id="yearLabel">All Years</span></button>
-      <div class="filter-menu hidden"></div>
-    </div>
-    <div class="filter" data-filter="popular">
-      <button class="filter-btn" onclick="toggleMenu(this)">Sort: <span id="popularLabel">Popular</span></button>
-      <div class="filter-menu hidden"></div>
-    </div>
-    <div class="filter" data-filter="genre">
-      <button class="filter-btn" onclick="toggleMenu(this)">Genre: <span id="genreLabel">All Genres</span></button>
-      <div class="filter-menu hidden"></div>
-    </div>
-    <div class="filter" data-filter="country">
-      <button class="filter-btn" onclick="toggleMenu(this)">Country: <span id="countryLabel">All Countries</span></button>
-      <div class="filter-menu hidden"></div>
-    </div>
-    <button class="filter-btn" id="applyFilters" style="background:var(--accent); font-weight:600;">Apply</button>
-  </div>
 
-  <!-- Results Section -->
-  <div class="results-section">
-    <div class="results-header">
-      <span id="resultsTitle">Discover Movies</span>
-      <span id="resultsCount"></span>
-    </div>
-    <div class="results-grid" id="results">
-      <!-- Cards will load here -->
-    </div>
-    <div id="pagination" style="display:flex; justify-content:center; gap:8px; margin-top:20px;"></div>
-  </div>
-
-  <!-- Detail Overlay -->
-  <div class="detail-overlay hidden" id="detailOverlay">
-    <button id="detailBack" style="position:absolute; top:16px; left:16px; z-index:350; background:rgba(0,0,0,0.5); border:none; color:#fff; padding:8px 12px; border-radius:20px; font-size:12px; cursor:pointer;">← Back</button>
-    <div class="detail-hero" id="detailHero"></div>
-    <div id="detailContent" style="padding: 16px;"></div>
-  </div>
-
-  <!-- Timeline Page -->
-  <div class="detail-overlay hidden" id="timelinePage">
-    <button id="closeTimeline" style="position:absolute; top:16px; left:16px; z-index:350; background:rgba(0,0,0,0.5); border:none; color:#fff; padding:8px 12px; border-radius:20px; font-size:12px; cursor:pointer;">← Back</button>
-    <div style="padding: 60px 16px 16px;">
-      <h2>Watch Journey</h2>
-      <div id="timelineWatched" style="margin-top:16px;"></div>
-      <h2 style="margin-top:24px;">Scheduled Schedule</h2>
-      <div id="timelineScheduled" style="margin-top:16px;"></div>
-    </div>
-  </div>
-
-  <!-- Date Modal -->
-  <div class="modal hidden" id="dateModal">
-    <div class="modal-content">
-      <h3 id="dateTitle" style="margin-bottom: 12px;">Schedule Title</h3>
-      <input type="date" id="selectedDate" style="width:100%; padding:10px; background:var(--bg-primary); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:8px; margin-bottom:12px;">
-      <div style="display:flex; gap:8px;">
-        <button id="saveDate" class="action-btn primary">Save</button>
-        <button id="closeDate" class="action-btn">Cancel</button>
+    <!-- Pick For Me Tab -->
+    <div id="pickView" class="hidden">
+      <div style="max-width: 500px; margin: 40px auto; text-align: center; display:flex; flex-direction:column; gap:16px;">
+        <h2>🎲 Pick For Me</h2>
+        <p style="color:var(--text-muted); font-size:13px;">Confused what to watch? Let us randomly select a great title for you without boring filters.</p>
+        <div style="display:flex; gap:10px; justify-content:center;">
+          <button class="btn-primary" onclick="triggerRandomPick('movie')">Pick Movie</button>
+          <button class="btn-secondary" onclick="triggerRandomPick('tv')">Pick TV Show</button>
+        </div>
+        <div id="randomResultContainer" style="margin-top:20px;"></div>
       </div>
     </div>
-  </div>
 
-  <!-- Random Modal -->
-  <div class="modal hidden" id="randomModal">
-    <div class="modal-content">
-      <h3>Random Picker</h3>
-      <div style="margin: 12px 0;" id="randomType">
-        <button class="global-media-btn active" data-value="movie">Movie</button>
-        <button class="global-media-btn" data-value="tv">TV</button>
-      </div>
-      <button id="randomGenreBtn" class="filter-btn" style="width:100%; margin-bottom:12px;"><span id="randomGenreLabel">Any Genre</span></button>
-      <div id="randomGenreMenu" class="hidden" style="max-height:150px; overflow-y:auto; margin-bottom:12px;"></div>
-      <button id="pickBtn" class="action-btn primary" style="width:100%; margin-bottom:8px;">🎲 PICK FOR ME</button>
-      <div id="randomResult" style="display:none; margin-top:12px; text-align:center;">
-        <img id="randomResultImage" style="width:80px; border-radius:8px; margin-bottom:8px;">
-        <h4 id="randomResultName"></h4>
-        <p id="randomResultMeta" style="font-size:11px; color:var(--text-muted);"></p>
-        <button id="randomView" class="action-btn primary" style="margin-top:8px;">View Details</button>
-      </div>
-      <button id="closeRandom" class="action-btn" style="width:100%; margin-top:12px;">Close</button>
+    <!-- Watch Journey Tab -->
+    <div id="journeyView" class="hidden">
+      <h2 style="margin-bottom: 16px;">⏱️ Watch Journey</h2>
+      <h3 style="font-size:15px; color:var(--text-muted); margin-bottom:10px;">Watched Items</h3>
+      <div class="media-grid" id="watchedGrid"></div>
+      <h3 style="font-size:15px; color:var(--text-muted); margin: 20px 0 10px;">Scheduled Items</h3>
+      <div class="media-grid" id="scheduledGrid"></div>
     </div>
+  </main>
+
+  <!-- Detail Page View -->
+  <div id="detailView" class="page-view">
+    <button class="back-btn" onclick="closeDetails()">← Back</button>
+    <div class="hero-banner" id="detailHero">
+      <div class="hero-content">
+        <h1 id="detailTitle" style="font-size: 28px; font-weight:800; margin-bottom:8px;"></h1>
+        <div id="detailMeta" style="font-size: 13px; color: var(--text-muted); margin-bottom:12px;"></div>
+      </div>
+    </div>
+    <div class="details-body" id="detailBodyContent"></div>
   </div>
 
-  <!-- Bottom Floating Action Buttons -->
-  <div style="position:fixed; bottom:16px; right:16px; display:flex; gap:8px; z-index:90;">
-    <button id="randomBtn" style="background:var(--accent); color:#fff; border:none; width:45px; height:45px; border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,0.5); font-size:18px; cursor:pointer;">🎲</button>
-    <button id="timelineBtn" style="background:var(--bg-secondary); color:#fff; border:1px solid rgba(255,255,255,0.2); width:45px; height:45px; border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,0.5); font-size:18px; cursor:pointer;">⏱</button>
-  </div>
-
-  <!-- JavaScript Logic -->
+  <!-- JavaScript Application Logic -->
   <script>
     const API_KEY = "YOUR_TMDB_API_KEY"; // Apna TMDB API Key yahan dalein
     const BASE_URL = "https://api.themoviedb.org/3";
     const IMG_BASE = "https://image.tmdb.org/t/p/w500";
-    const PROFILE_SIZE = "https://image.tmdb.org/t/p/w185";
-    const STILL_SIZE = "https://image.tmdb.org/t/p/w300";
+    const BACKDROP_BASE = "https://image.tmdb.org/t/p/original";
 
-    const state = {
-      filters: { type: "movie", year: "", popular: "popular", genre: "", country: "" },
-      page: 1,
-      currentResults: [],
-      currentDetail: null,
-      currentSeason: 1,
-      dateAction: null,
-      random: { type: "movie", genre: "", last: null }
+    let state = {
+      activeTab: 'home',
+      genres: { movie: [], tv: [] }
     };
 
-    const MOVIE_GENRES = [
-      [28, "Action"], [12, "Adventure"], [16, "Animation"], [35, "Comedy"], 
-      [80, "Crime"], [99, "Documentary"], [18, "Drama"], [10751, "Family"], 
-      [14, "Fantasy"], [36, "History"], [27, "Horror"], [10402, "Music"], 
-      [9648, "Mystery"], [10749, "Romance"], [878, "Science Fiction"], 
-      [10770, "TV Movie"], [53, "Thriller"], [10752, "War"], [37, "Western"]
-    ];
-
-    const TV_GENRES = [
-      [10759, "Action & Adventure"], [16, "Animation"], [35, "Comedy"], 
-      [80, "Crime"], [99, "Documentary"], [18, "Drama"], [10751, "Family"], 
-      [10762, "Kids"], [9648, "Mystery"], [10763, "News"], [10764, "Reality"], 
-      [10765, "Sci-Fi & Fantasy"], [10766, "Soap"], [10767, "Talk"], 
-      [10768, "War & Politics"], [37, "Western"]
-    ];
-
-    const COUNTRIES = [
-      ["US", "United States"], ["IN", "India"], ["GB", "United Kingdom"], 
-      ["KR", "South Korea"], ["JP", "Japan"], ["FR", "France"], ["CA", "Canada"]
-    ];
-
-    function esc(str) {
-      if(!str) return "";
-      return String(str).replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    async function initApp() {
+      loadYears();
+      fetchGenres();
+      loadCarousels();
     }
 
-    async function api(endpoint, params = {}) {
-      const url = new URL(BASE_URL + endpoint);
-      url.searchParams.append("api_key", API_KEY);
-      for(const [k, v] of Object.entries(params)) {
-        if(v !== "" && v !== null && v !== undefined) url.searchParams.append(k, v);
+    function loadYears() {
+      const yearSelect = document.getElementById('filterYear');
+      const currentYear = new Date().getFullYear();
+      for(let y = currentYear; y >= 1970; y--) {
+        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
       }
-      const res = await fetch(url);
-      if(!res.ok) throw new Error("API request failed");
-      return await res.json();
     }
 
-    function image(path, size = IMG_BASE) {
-      return path ? `${size}${path}` : 'https://via.placeholder.com/300x450?text=No+Image';
-    }
-
-    function backdrop(path) {
-      return path ? `https://image.tmdb.org/t/p/original${path}` : '';
-    }
-
-    function titleOf(item) {
-      return item.title || item.name || item.original_title || item.original_name || "Untitled";
-    }
-
-    function dateOf(item) {
-      return item.release_date || item.first_air_date || "";
-    }
-
-    function yearFromDate(dateStr) {
-      return dateStr ? dateStr.split("-")[0] : "N/A";
-    }
-
-    function mediaType(item) {
-      return item.media_type || state.filters.type || "movie";
-    }
-
-    function uniqueItems(arr) {
-      const seen = new Set();
-      return arr.filter(item => {
-        const k = item.id + "_" + (item.media_type || state.filters.type);
-        if(seen.has(k)) return false;
-        seen.add(k);
-        return true;
-      });
-    }
-
-    function getWatched() { return JSON.parse(localStorage.getItem("watched_items") || "{}"); }
-    function saveWatched(data) { localStorage.setItem("watched_items", JSON.stringify(data)); }
-    function getScheduled() { return JSON.parse(localStorage.getItem("scheduled_items") || "{}"); }
-    function saveScheduled(data) { localStorage.setItem("scheduled_items", JSON.stringify(data)); }
-    function toast(msg) { alert(msg); }
-
-    function toggleMenu(btn) {
-      const filterWrap = btn.closest(".filter");
-      const menu = filterWrap.querySelector(".filter-menu");
-      document.querySelectorAll(".filter-menu").forEach(m => { if(m !== menu) m.classList.add("hidden"); });
-      menu.classList.toggle("hidden");
-      if(!menu.classList.contains("hidden")) buildFilterMenu(filterWrap.dataset.filter, menu);
-    }
-
-    function buildFilterMenu(type, menu) {
-      let html = "";
-      const current = state.filters[type];
-
-      if(type === "type") {
-        html = [
-          ["movie", "Movies"],
-          ["tv", "TV Shows"],
-          ["all", "All"]
-        ].map(x => `<button data-value="${x[0]}" class="${state.filters.type===x[0]?"selected":""}">${x[1]}</button>`).join("");
-      }
-
-      if(type === "year") {
-        html = `<button data-value="">All Years</button>`;
-        for(let y = 2026; y >= 1970; y--) {
-          html += `<button data-value="${y}" class="${String(state.filters.year)===String(y)?"selected":""}">${y}</button>`;
-        }
-      }
-
-      if(type === "popular") {
-        html = [
-          ["popular", "Popular"],
-          ["top_rated", "Top Rated"],
-          ["upcoming", "Upcoming"],
-          ["now_playing", "Now Playing"]
-        ].map(x => `<button data-value="${x[0]}" class="${state.filters.popular===x[0]?"selected":""}">${x[1]}</button>`).join("");
-      }
-
-      if(type === "genre") {
-        const genres = state.filters.type === "tv" ? TV_GENRES : MOVIE_GENRES;
-        html = `<button data-value="">All Genres</button>` + genres.map(g => `<button data-value="${g[0]}" class="${String(state.filters.genre)===String(g[0])?"selected":""}">${g[1]}</button>`).join("");
-      }
-
-      if(type === "country") {
-        html = `<button data-value="">All Countries</button>` + COUNTRIES.map(c => `<button data-value="${c[0]}" class="${state.filters.country===c[0]?"selected":""}">${c[1]}</button>`).join("");
-      }
-
-      menu.innerHTML = html;
-      menu.querySelectorAll("button").forEach(btn => {
-        btn.addEventListener("click", () => {
-          state.filters[filterWrap(menu).dataset.filter] = btn.dataset.value;
-          updateFilterLabels();
-          menu.classList.add("hidden");
-        });
-      });
-    }
-
-    function filterWrap(menu) { return menu.closest(".filter"); }
-
-    function updateFilterLabels() {
-      document.getElementById("typeLabel").textContent = state.filters.type === "movie" ? "Movies" : state.filters.type === "tv" ? "TV Shows" : "All";
-      document.getElementById("yearLabel").textContent = state.filters.year || "All Years";
-      document.getElementById("popularLabel").textContent = state.filters.popular;
-      document.getElementById("genreLabel").textContent = "Selected";
-      document.getElementById("countryLabel").textContent = state.filters.country || "All Countries";
-    }
-
-    async function loadResults(page = 1) {
-      state.page = page;
-      const container = document.getElementById("results");
-      container.innerHTML = `<div class="loading">Loading...</div>`;
+    async function fetchGenres() {
       try {
-        let endpoint = state.filters.type === "tv" ? `/tv/${state.filters.popular}` : `/movie/${state.filters.popular}`;
-        let params = { page };
-        if(state.filters.year) params.primary_release_year = state.filters.year;
-        if(state.filters.genre) params.with_genres = state.filters.genre;
+        const [mRes, tvRes] = await Promise.all([
+          fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}/genre/tv/list?api_key=${API_KEY}`)
+        ]);
+        const mData = await mRes.json();
+        const tvData = await tvRes.json();
+        state.genres.movie = mData.genres || [];
+        state.genres.tv = tvData.genres || [];
         
-        let data = await api(endpoint, params);
-        state.currentResults = data.results || [];
-        renderGrid(state.currentResults, container);
-      } catch(err) {
-        container.innerHTML = `<div class="empty">Failed to load data. Please check your API Key.</div>`;
-      }
+        // Populate genre dropdown with movie genres initially
+        const genreSelect = document.getElementById('filterGenre');
+        state.genres.movie.forEach(g => {
+          genreSelect.innerHTML += `<option value="${g.id}">${g.name}</option>`;
+        });
+      } catch(e) { console.error(e); }
     }
 
-    function renderGrid(items, container) {
+    async function loadCarousels() {
+      try {
+        const [mRes, tvRes] = await Promise.all([
+          fetch(`${BASE_URL}/trending/movie/day?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}/trending/tv/day?api_key=${API_KEY}`)
+        ]);
+        const mData = await mRes.json();
+        const tvData = await tvRes.json();
+
+        renderCarousel(mData.results, 'trendingMoviesCarousel', 'movie');
+        renderCarousel(tvData.results, 'trendingTvCarousel', 'tv');
+      } catch(e) { console.error(e); }
+    }
+
+    function renderCarousel(items, containerId, mediaType) {
+      const container = document.getElementById(containerId);
       container.innerHTML = items.map(item => `
-        <div class="movie-card" onclick="openDetails(${item.id}, '${mediaType(item)}')">
+        <div class="media-card" onclick="openDetails(${item.id}, '${item.media_type || mediaType}')">
           <div class="poster-wrap">
-            <img class="poster" src="${image(item.poster_path)}" alt="${esc(titleOf(item))}">
-            <div class="poster-type">${mediaType(item).toUpperCase()}</div>
+            <img src="${item.poster_path ? IMG_BASE + item.poster_path : 'https://via.placeholder.com/180x270?text=No+Image'}" alt="poster">
+            <span class="card-badge">★ ${(item.vote_average || 0).toFixed(1)}</span>
           </div>
-          <div class="card-body">
-            <div class="card-title">${esc(titleOf(item))}</div>
+          <div class="card-content">
+            <div class="card-title">${item.title || item.name}</div>
             <div class="card-meta">
-              <span>${yearFromDate(dateOf(item))}</span>
-              <span>★ ${Number(item.vote_average || 0).toFixed(1)}</span>
+              <span>${(item.release_date || item.first_air_date || '').split('-')[0]}</span>
+              <span>${(item.media_type || mediaType).toUpperCase()}</span>
             </div>
           </div>
         </div>
-      `).join("");
+      `).join('');
     }
 
-    async function openDetails(id, type) {
-      const overlay = document.getElementById("detailOverlay");
-      overlay.classList.remove("hidden");
-      document.getElementById("detailHero").innerHTML = `<div class="loading">Loading details...</div>`;
-      try {
-        let detail = await api(`/${type}/${id}`);
-        document.getElementById("detailHero").innerHTML = `
-          <img class="detail-bg" src="${backdrop(detail.backdrop_path)}">
-          <div class="detail-bg-overlay"></div>
-          <div class="detail-main">
-            <img class="detail-poster" src="${image(detail.poster_path)}">
-            <h1 class="detail-title">${esc(titleOf(detail))}</h1>
-            <p class="detail-overview">${esc(detail.overview)}</p>
-          </div>
-        `;
-      } catch(err) {
-        document.getElementById("detailHero").innerHTML = `<div class="empty">Error loading details</div>`;
+    function switchTab(tabId) {
+      state.activeTab = tabId;
+      document.querySelectorAll('main > div').forEach(d => d.classList.add('hidden'));
+      document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+
+      if(tabId === 'home') {
+        document.getElementById('homeView').classList.remove('hidden');
+      } else if(tabId === 'search') {
+        document.getElementById('searchView').classList.remove('hidden');
+      } else if(tabId === 'pick') {
+        document.getElementById('pickView').classList.remove('hidden');
+      } else if(tabId === 'journey') {
+        document.getElementById('journeyView').classList.remove('hidden');
+        renderWatchJourney();
       }
     }
 
-    function setupSearch() {
-      const input = document.getElementById("searchInput");
-      input.addEventListener("keydown", async (e) => {
-        if(e.key === "Enter" && input.value.trim()) {
-          const data = await api("/search/multi", { query: input.value.trim() });
-          state.currentResults = data.results || [];
-          renderGrid(state.currentResults, document.getElementById("results"));
+    async function handleSearchInput(query) {
+      const dropdown = document.getElementById('searchDropdown');
+      if(!query.trim()) {
+        dropdown.classList.add('hidden');
+        return;
+      }
+      try {
+        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        const results = (data.results || []).slice(0, 5);
+
+        if(results.length > 0) {
+          dropdown.innerHTML = results.map(item => `
+            <div class="suggestion-item" onclick="openDetails(${item.id}, '${item.media_type || 'movie'}')">
+              <img src="${item.poster_path ? IMG_BASE + item.poster_path : 'https://via.placeholder.com/36x50'}">
+              <div>
+                <div style="font-size:13px; font-weight:600;">${item.title || item.name}</div>
+                <div style="font-size:11px; color:var(--text-muted);">${(item.release_date || item.first_air_date || '').split('-')[0]} • ${(item.media_type || 'movie').toUpperCase()}</div>
+              </div>
+            </div>
+          `).join('');
+          dropdown.classList.remove('hidden');
+        } else {
+          dropdown.classList.add('hidden');
         }
-      });
+      } catch(e) { dropdown.classList.add('hidden'); }
     }
 
-    function setMainMediaType(type) {
-      state.filters.type = type;
-      loadResults(1);
+    async function applyFilters() {
+      const type = document.getElementById('filterType').value;
+      const genre = document.getElementById('filterGenre').value;
+      const country = document.getElementById('filterCountry').value;
+      const year = document.getElementById('filterYear').value;
+
+      const filteredSection = document.getElementById('filteredSection');
+      const grid = document.getElementById('filteredGrid');
+
+      filteredSection.classList.remove('hidden');
+      grid.innerHTML = '<div style="color:var(--text-muted);">Filtering...</div>';
+
+      let endpoint = type === 'tv' ? `${BASE_URL}/discover/tv` : `${BASE_URL}/discover/movie`;
+      if(type === 'all') endpoint = `${BASE_URL}/discover/movie`; // fallback for discovery mix
+
+      let url = `${endpoint}?api_key=${API_KEY}`;
+      if(genre) url += `&with_genres=${genre}`;
+      if(country) url += `&with_origin_country=${country}`;
+      if(year) url += `&primary_release_year=${year}&first_air_date_year=${year}`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const results = data.results || [];
+        
+        grid.innerHTML = results.length ? results.map(item => `
+          <div class="media-card" onclick="openDetails(${item.id}, '${type === 'tv' ? 'tv' : 'movie'}')">
+            <div class="poster-wrap">
+              <img src="${item.poster_path ? IMG_BASE + item.poster_path : 'https://via.placeholder.com/180x270'}">
+              <span class="card-badge">★ ${(item.vote_average || 0).toFixed(1)}</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">${item.title || item.name}</div>
+              <div class="card-meta">
+                <span>${(item.release_date || item.first_air_date || '').split('-')[0]}</span>
+              </div>
+            </div>
+          </div>
+        `).join('') : '<div style="color:var(--text-muted);">No results found.</div>';
+      } catch(e) { grid.innerHTML = 'Error loading filter results.'; }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      setupSearch();
-      document.getElementById("applyFilters").addEventListener("click", () => loadResults(1));
-      document.getElementById("detailBack").addEventListener("click", () => document.getElementById("detailOverlay").classList.add("hidden"));
-      document.getElementById("closeTimeline").addEventListener("click", () => document.getElementById("timelinePage").classList.add("hidden"));
-      document.getElementById("timelineBtn").addEventListener("click", () => document.getElementById("timelinePage").classList.remove("hidden"));
-      loadResults(1);
-    });
+    async function executeFullSearch(query) {
+      const grid = document.getElementById('fullSearchGrid');
+      if(!query.trim()) { grid.innerHTML = ''; return; }
+      try {
+        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
+        const data = await res.json();
+        grid.innerHTML = (data.results || []).map(item => `
+          <div class="media-card" onclick="openDetails(${item.id}, '${item.media_type || 'movie'}')">
+            <div class="poster-wrap">
+              <img src="${item.poster_path ? IMG_BASE + item.poster_path : 'https://via.placeholder.com/180x270'}">
+              <span class="card-badge">★ ${(item.vote_average || 0).toFixed(1)}</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">${item.title || item.name}</div>
+              <div class="card-meta">
+                <span>${(item.media_type || 'movie').toUpperCase()}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) {}
+    }
+
+    async function triggerRandomPick(mediaType) {
+      const container = document.getElementById('randomResultContainer');
+      container.innerHTML = 'Picking random title...';
+      try {
+        const randomPage = Math.floor(Math.random() * 5) + 1;
+        const res = await fetch(`${BASE_URL}/${mediaType}/popular?api_key=${API_KEY}&page=${randomPage}`);
+        const data = await res.json();
+        const items = data.results || [];
+        if(items.length === 0) return;
+        const randomItem = items[Math.floor(Math.random() * items.length)];
+
+        container.innerHTML = `
+          <div class="media-card" style="max-width:220px; margin:0 auto;" onclick="openDetails(${randomItem.id}, '${mediaType}')">
+            <div class="poster-wrap">
+              <img src="${IMG_BASE + randomItem.poster_path}">
+              <span class="card-badge">★ ${randomItem.vote_average.toFixed(1)}</span>
+            </div>
+            <div class="card-content">
+              <div class="card-title">${randomItem.title || randomItem.name}</div>
+              <div style="font-size:11px; color:var(--text-muted); text-align:left; margin-top:4px;">${randomItem.overview.slice(0, 60)}...</div>
+            </div>
+          </div>
+        `;
+      } catch(e) { container.innerHTML = 'Failed to pick.'; }
+    }
+
+    async function openDetails(id, mediaType) {
+      const view = document.getElementById('detailView');
+      view.classList.add('active');
+      const hero = document.getElementById('detailHero');
+      const title = document.getElementById('detailTitle');
+      const meta = document.getElementById('detailMeta');
+      const body = document.getElementById('detailBodyContent');
+
+      body.innerHTML = 'Loading complete overview...';
+
+      try {
+        const [detailRes, creditsRes, ottRes] = await Promise.all([
+          fetch(`${BASE_URL}/${mediaType}/${id}?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}/${mediaType}/${id}/credits?api_key=${API_KEY}`),
+          fetch(`${BASE_URL}/${mediaType}/${id}/watch/providers?api_key=${API_KEY}`)
+        ]);
+
+        const detail = await detailRes.json();
+        const credits = await creditsRes.json();
+        const ottData = await ottRes.json();
+
+        hero.style.backgroundImage = `url(${BACKDROP_BASE + detail.backdrop_path})`;
+        title.textContent = detail.title || detail.name;
+        meta.textContent = `${(detail.release_date || detail.first_air_date || '').split('-')[0]} • ${detail.runtime ? detail.runtime + ' mins' : mediaType.toUpperCase()}`;
+
+        let ottProviders = [];
+        if(ottData.results && ottData.results.IN) {
+          ottProviders = ottData.results.IN.flatrate || ottData.results.IN.rent || [];
+        }
+
+        body.innerHTML = `
+          <div class="action-row">
+            <button class="btn-primary" onclick='markWatched(${JSON.stringify({id, title: detail.title||detail.name, poster: detail.poster_path, type: mediaType})})'>✓ Mark Watched</button>
+            <button class="btn-secondary" onclick='scheduleItem(${JSON.stringify({id, title: detail.title||detail.name, poster: detail.poster_path, type: mediaType})})'>📅 Schedule Watch</button>
+          </div>
+          <div>
+            <h3 style="font-size:15px; margin-bottom:8px;">Overview</h3>
+            <p style="font-size:13px; color:var(--text-muted); line-height:1.5;">${detail.overview}</p>
+          </div>
+          ${ottProviders.length ? `
+            <div>
+              <h3 style="font-size:15px; margin-bottom:8px;">Where to Watch (OTT)</h3>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                ${ottProviders.map(p => `<a href="${ottData.results.IN.link || '#'}" target="_blank" class="ott-logo"><img src="${IMG_BASE + p.logo_path}">${p.provider_name}</a>`).join('')}
+              </div>
+            </div>
+          ` : ''}
+          <div>
+            <h3 style="font-size:15px; margin-bottom:8px;">Top Cast</h3>
+            <div class="horizontal-scroll">
+              ${(credits.cast || []).slice(0, 10).map(c => `
+                <div class="cast-card">
+                  <img src="${c.profile_path ? IMG_BASE + c.profile_path : 'https://via.placeholder.com/100'}">
+                  <div class="cast-name">${c.name}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          ${mediaType === 'tv' ? `<div id="tvSeasonsContainer"></div>` : ''}
+        `;
+
+        if(mediaType === 'tv' && detail.seasons) {
+          loadTvSeasons(id, detail.seasons);
+        }
+
+      } catch(e) { body.innerHTML = 'Error loading details.'; }
+    }
+
+    async function loadTvSeasons(tvId, seasons) {
+      const container = document.getElementById('tvSeasonsContainer');
+      container.innerHTML = `
+        <h3 style="font-size:15px; margin-bottom:8px;">Seasons & Episodes</h3>
+        <select class="filter-select" id="seasonSelect" onchange="fetchSeasonEpisodes(${tvId}, this.value)" style="margin-bottom:12px;">
+          ${seasons.map(s => `<option value="${s.season_number}">Season ${s.season_number} (${s.episode_count} eps)</option>`).join('')}
+        </select>
+        <div class="episode-list" id="episodeListContainer"></div>
+      `;
+      if(seasons.length > 0) fetchSeasonEpisodes(tvId, seasons[0].season_number);
+    }
+
+    async function fetchSeasonEpisodes(tvId, seasonNum) {
+      const container = document.getElementById('episodeListContainer');
+      container.innerHTML = 'Loading episodes...';
+      try {
+        const res = await fetch(`${BASE_URL}/tv/${tvId}/season/${seasonNum}?api_key=${API_KEY}`);
+        const data = await res.json();
+        container.innerHTML = (data.episodes || []).map(ep => `
+          <div class="episode-item">
+            <img src="${ep.still_path ? IMG_BASE + ep.still_path : 'https://via.placeholder.com/120x70'}">
+            <div>
+              <div style="font-size:13px; font-weight:600;">E${ep.episode_number}. ${ep.name}</div>
+              <div style="font-size:11px; color:var(--text-muted); margin:2px 0;">★ ${ep.vote_average.toFixed(1)} • ${ep.air_date || 'N/A'}</div>
+              <div style="font-size:11px; color:var(--text-muted);">${(ep.overview || '').slice(0, 80)}...</div>
+            </div>
+          </div>
+        `).join('');
+      } catch(e) { container.innerHTML = 'Could not load episodes.'; }
+    }
+
+    function closeDetails() {
+      document.getElementById('detailView').classList.remove('active');
+    }
+
+    function markWatched(item) {
+      let watched = JSON.parse(localStorage.getItem('cinevo_watched') || '[]');
+      watched.push({...item, date: new Date().toLocaleDateString()});
+      localStorage.setItem('cinevo_watched', JSON.stringify(watched));
+      alert('Marked as Watched!');
+    }
+
+    function scheduleItem(item) {
+      let scheduled = JSON.parse(localStorage.getItem('cinevo_scheduled') || '[]');
+      scheduled.push({...item, date: 'Upcoming'});
+      localStorage.setItem('cinevo_scheduled', JSON.stringify(scheduled));
+      alert('Added to Schedule!');
+    }
+
+    function renderWatchJourney() {
+      const watched = JSON.parse(localStorage.getItem('cinevo_watched') || '[]');
+      const scheduled = JSON.parse(localStorage.getItem('cinevo_scheduled') || '[]');
+
+      document.getElementById('watchedGrid').innerHTML = watched.length ? watched.map(i => `
+        <div class="media-card" onclick="openDetails(${i.id}, '${i.type}')">
+          <div class="poster-wrap"><img src="${IMG_BASE + i.poster}"></div>
+          <div class="card-content"><div class="card-title">${i.title}</div><div class="card-meta">Watched: ${i.date}</div></div>
+        </div>
+      `).join('') : '<div style="color:var(--text-muted); font-size:12px;">No watched items yet.</div>';
+
+      document.getElementById('scheduledGrid').innerHTML = scheduled.length ? scheduled.map(i => `
+        <div class="media-card" onclick="openDetails(${i.id}, '${i.type}')">
+          <div class="poster-wrap"><img src="${IMG_BASE + i.poster}"></div>
+          <div class="card-content"><div class="card-title">${i.title}</div><div class="card-meta">Scheduled</div></div>
+        </div>
+      `).join('') : '<div style="color:var(--text-muted); font-size:12px;">No scheduled items.</div>';
+    }
+
+    window.onload = initApp;
   </script>
 </body>
 </html>
