@@ -31,6 +31,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     .hidden { display: none !important; }
@@ -283,7 +284,7 @@
       margin-bottom: 32px;
     }
 
-    /* Details View - Split Layout Fixed */
+    /* Details View - Perfect Split Layout */
     .page-view {
       position: fixed;
       inset: 0;
@@ -313,12 +314,12 @@
     }
 
     .details-container {
-      max-width: 1300px;
+      max-width: 1200px;
       margin: 60px auto 40px auto;
       padding: 24px;
       display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 40px;
+      grid-template-columns: 1fr 340px;
+      gap: 30px;
       align-items: start;
     }
 
@@ -326,20 +327,20 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+      min-width: 0;
     }
 
     .details-right {
-      position: sticky;
-      top: 24px;
+      background: var(--bg-card);
       border-radius: var(--radius);
       overflow: hidden;
       border: 1px solid var(--border);
-      background: var(--bg-card);
+      width: 100%;
     }
 
     .details-backdrop {
       width: 100%;
-      height: 220px;
+      height: 190px;
       object-fit: cover;
       display: block;
     }
@@ -348,7 +349,7 @@
       padding: 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     .action-row {
@@ -487,7 +488,6 @@
 
     @media (max-width: 900px) {
       .details-container { grid-template-columns: 1fr; }
-      .details-right { position: relative; top: 0; }
     }
   </style>
 </head>
@@ -864,7 +864,7 @@
           </div>
 
           <div class="details-right">
-            <img class="details-backdrop" src="${detail.backdrop_path ? BACKDROP_BASE + detail.backdrop_path : 'https://via.placeholder.com/380x240'}">
+            <img class="details-backdrop" src="${detail.backdrop_path ? BACKDROP_BASE + detail.backdrop_path : 'https://via.placeholder.com/340x190'}">
             <div class="details-info-pad">
               <div style="font-size:12px; color:var(--text-muted)">Genres: ${(detail.genres || []).map(g => g.name).join(', ')}</div>
               <div style="font-size:12px; color:var(--text-muted)">Status: ${detail.status || 'Released'}</div>
