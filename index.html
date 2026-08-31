@@ -1956,16 +1956,22 @@ header{
 <script id="cinevo-mobile-approved-search">
 function cinevoMobileSearch(){
   const input=document.getElementById('searchInput');
-  if(!input) return;
-  const wrap=input.closest('.search-wrap');
-  if(wrap){
-    wrap.style.display='block';
-    wrap.style.width='calc(100% - 28px)';
-    wrap.style.maxWidth='none';
-    wrap.style.margin='0 14px 10px';
-    wrap.style.boxSizing='border-box';
+  const wrap=input ? input.closest('.search-wrap') : null;
+  if(!input || !wrap) return;
+
+  // Mobile search is hidden by the mobile header CSS until the Search
+  // navigation item is tapped. Use a class with !important so it wins
+  // against the hidden desktop search rule.
+  wrap.classList.add('mobile-search-open');
+  wrap.style.width='calc(100% - 28px)';
+  wrap.style.maxWidth='none';
+  wrap.style.margin='0 14px 10px';
+  wrap.style.boxSizing='border-box';
+
+  requestAnimationFrame(()=>{
     input.focus();
-  }
+    input.select();
+  });
 }
 </script>
 <style id="cinevo-mobile-trending-final">
@@ -2074,6 +2080,28 @@ header .search-wrap,header .nav-actions{display:none!important}
 }
 @media(min-width:701px){#cinevoMobileNav{display:none!important}}
 </style>
+
+<style id="cinevo-mobile-search-fix">
+@media (max-width:700px){
+  header .search-wrap.mobile-search-open{
+    display:block !important;
+    width:calc(100% - 28px) !important;
+    max-width:none !important;
+    margin:0 14px 10px !important;
+    box-sizing:border-box !important;
+  }
+
+  header .search-wrap.mobile-search-open .search-suggestions{
+    display:block;
+  }
+
+  header .search-wrap.mobile-search-open .search{
+    width:100% !important;
+    box-sizing:border-box !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
