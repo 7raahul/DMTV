@@ -2102,6 +2102,117 @@ header .search-wrap,header .nav-actions{display:none!important}
 }
 </style>
 
+
+<style id="cinevo-mobile-browse-final-fix">
+/* MOBILE ONLY — compact one-line Browse By.
+   Desktop/browser layout is intentionally untouched. */
+@media (max-width:700px){
+  .browse-box{
+    width:100% !important;
+    max-width:100% !important;
+    height:52px !important;
+    min-height:52px !important;
+    padding:0 !important;
+    margin:0 !important;
+    border-radius:14px !important;
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    scrollbar-width:none !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior-x:contain !important;
+  }
+
+  .browse-box::-webkit-scrollbar{
+    display:none !important;
+  }
+
+  .browse-row{
+    width:max-content !important;
+    min-width:max-content !important;
+    height:50px !important;
+    min-height:50px !important;
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    align-items:stretch !important;
+    gap:0 !important;
+  }
+
+  .browse-label{
+    flex:0 0 auto !important;
+    height:50px !important;
+    display:flex !important;
+    align-items:center !important;
+    padding:0 13px !important;
+    margin:0 !important;
+    border-right:1px solid rgba(255,255,255,.07) !important;
+    white-space:nowrap !important;
+    font-size:9px !important;
+    letter-spacing:.8px !important;
+  }
+
+  .browse-row .filter{
+    flex:0 0 auto !important;
+    height:50px !important;
+    min-width:0 !important;
+    position:relative !important;
+  }
+
+  .browse-row .filter-btn{
+    height:50px !important;
+    min-width:0 !important;
+    width:auto !important;
+    max-width:none !important;
+    padding:0 12px !important;
+    margin:0 !important;
+    border:0 !important;
+    border-right:1px solid rgba(255,255,255,.07) !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    color:#d8dde5 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:9px !important;
+    white-space:nowrap !important;
+    font-size:10px !important;
+    line-height:1 !important;
+  }
+
+  .browse-row .filter-btn:hover,
+  .browse-row .filter-btn:focus{
+    background:rgba(255,255,255,.045) !important;
+    outline:none !important;
+  }
+
+  .browse-row .filter-menu{
+    position:absolute !important;
+    top:calc(100% + 6px) !important;
+    left:0 !important;
+    z-index:9999 !important;
+    width:190px !important;
+    max-width:calc(100vw - 30px) !important;
+    max-height:260px !important;
+    overflow:auto !important;
+  }
+
+  .browse-row .apply-btn{
+    flex:0 0 auto !important;
+    align-self:center !important;
+    height:34px !important;
+    min-height:34px !important;
+    width:auto !important;
+    min-width:58px !important;
+    margin:0 8px !important;
+    padding:0 13px !important;
+    border:0 !important;
+    border-radius:9px !important;
+    white-space:nowrap !important;
+    font-size:10px !important;
+    font-weight:900 !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
