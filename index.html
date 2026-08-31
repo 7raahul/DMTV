@@ -283,7 +283,7 @@
       margin-bottom: 32px;
     }
 
-    /* Details View - Split Layout without overlap */
+    /* Details View - Split Layout Fixed */
     .page-view {
       position: fixed;
       inset: 0;
@@ -339,8 +339,9 @@
 
     .details-backdrop {
       width: 100%;
-      height: 240px;
+      height: 220px;
       object-fit: cover;
+      display: block;
     }
 
     .details-info-pad {
@@ -497,7 +498,6 @@
     <div class="logo" onclick="switchTab('home')">CineVo</div>
     <div class="nav-links">
       <button class="nav-link active" onclick="switchTab('home')">Home</button>
-      <button class="nav-link" onclick="switchTab('search')">Search</button>
       <button class="btn-pick-top" onclick="switchTab('pick')">🎲 Pick For Me</button>
       <button class="nav-link" onclick="switchTab('journey')">Watch Journey</button>
     </div>
@@ -551,13 +551,6 @@
       <div class="carousel-container">
         <div class="carousel" id="trendingTvCarousel"></div>
       </div>
-    </div>
-
-    <!-- Search View Tab -->
-    <div id="searchView" class="hidden">
-      <h2 style="margin-bottom: 16px;">Search Explorer</h2>
-      <input type="text" class="search-input" placeholder="Type to search movies & TV..." oninput="executeFullSearch(this.value)" style="margin-bottom: 20px;">
-      <div class="media-grid" id="fullSearchGrid"></div>
     </div>
 
     <!-- Pick For Me Tab -->
@@ -675,8 +668,6 @@
 
       if(tabId === 'home') {
         document.getElementById('homeView').classList.remove('hidden');
-      } else if(tabId === 'search') {
-        document.getElementById('searchView').classList.remove('hidden');
       } else if(tabId === 'pick') {
         document.getElementById('pickView').classList.remove('hidden');
       } else if(tabId === 'journey') {
@@ -753,29 +744,6 @@
           </div>
         `).join('') : '<div style="color:var(--text-muted);">No results found.</div>';
       } catch(e) { grid.innerHTML = 'Error loading filter results.'; }
-    }
-
-    async function executeFullSearch(query) {
-      const grid = document.getElementById('fullSearchGrid');
-      if(!query.trim()) { grid.innerHTML = ''; return; }
-      try {
-        const res = await fetch(`${BASE_URL}/search/multi?api_key=${API_KEY}&query=${encodeURIComponent(query)}`);
-        const data = await res.json();
-        grid.innerHTML = (data.results || []).map(item => `
-          <div class="media-card" onclick="openDetails(${item.id}, '${item.media_type || 'movie'}')">
-            <div class="poster-wrap">
-              <img src="${item.poster_path ? IMG_BASE + item.poster_path : 'https://via.placeholder.com/180x270'}">
-              <span class="card-badge">★ ${(item.vote_average || 0).toFixed(1)}</span>
-            </div>
-            <div class="card-content">
-              <div class="card-title">${item.title || item.name}</div>
-              <div class="card-meta">
-                <span>${(item.media_type || 'movie').toUpperCase()}</span>
-              </div>
-            </div>
-          </div>
-        `).join('');
-      } catch(e) {}
     }
 
     async function triggerRandomPick(mediaType) {
@@ -913,7 +881,6 @@
     }
 
     async function loadTvSeasons(tvId, seasons) {
-      // filter out season 0 if considered specials, or keep regular seasons cleanly
       const regularSeasons = seasons.filter(s => s.season_number > 0);
       const container = document.getElementById('tvSeasonsContainer');
       container.innerHTML = `
