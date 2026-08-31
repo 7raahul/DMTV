@@ -2213,6 +2213,60 @@ header .search-wrap,header .nav-actions{display:none!important}
 }
 </style>
 
+
+<style id="cinevo-mobile-trending-controls-final">
+@media (max-width:700px){
+  /* Reserve a dedicated footer area for the carousel controls.
+     This fixes dots / < > from sitting under or over View Details. */
+  #trendingBox .trend-content{
+    padding-bottom:58px !important;
+  }
+
+  #trendingBox .trend-btn{
+    position:relative !important;
+    z-index:5 !important;
+    margin-bottom:0 !important;
+  }
+
+  #trendingBox .trend-dots{
+    position:absolute !important;
+    left:14px !important;
+    bottom:13px !important;
+    z-index:8 !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:5px !important;
+    max-width:calc(100% - 105px) !important;
+    overflow:hidden !important;
+  }
+
+  #trendingBox .trend-arrow{
+    position:absolute !important;
+    bottom:7px !important;
+    z-index:9 !important;
+    width:34px !important;
+    height:34px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  #trendingBox .trend-prev{
+    right:49px !important;
+  }
+
+  #trendingBox .trend-next{
+    right:9px !important;
+  }
+
+  /* Keep the footer controls below the action button even when
+     the overview text changes height. */
+  #trendingBox .trend-slide{
+    padding-bottom:0 !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
