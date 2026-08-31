@@ -475,7 +475,7 @@
         </select>
       </div>
 
-      <!-- Filtered Results Grid (Hidden by default until filtered/searched) -->
+      <!-- Filtered Results Grid -->
       <div id="filteredSection" class="hidden">
         <div class="section-title">Results</div>
         <div class="media-grid" id="filteredGrid"></div>
@@ -538,7 +538,7 @@
 
   <!-- JavaScript Application Logic -->
   <script>
-    const API_KEY = "YOUR_TMDB_API_KEY"; // Apna TMDB API Key yahan dalein
+    const API_KEY = "9c95420163879f1c4726c540b305cbc6";
     const BASE_URL = "https://api.themoviedb.org/3";
     const IMG_BASE = "https://image.tmdb.org/t/p/w500";
     const BACKDROP_BASE = "https://image.tmdb.org/t/p/original";
@@ -573,7 +573,6 @@
         state.genres.movie = mData.genres || [];
         state.genres.tv = tvData.genres || [];
         
-        // Populate genre dropdown with movie genres initially
         const genreSelect = document.getElementById('filterGenre');
         state.genres.movie.forEach(g => {
           genreSelect.innerHTML += `<option value="${g.id}">${g.name}</option>`;
@@ -672,7 +671,7 @@
       grid.innerHTML = '<div style="color:var(--text-muted);">Filtering...</div>';
 
       let endpoint = type === 'tv' ? `${BASE_URL}/discover/tv` : `${BASE_URL}/discover/movie`;
-      if(type === 'all') endpoint = `${BASE_URL}/discover/movie`; // fallback for discovery mix
+      if(type === 'all') endpoint = `${BASE_URL}/discover/movie`;
 
       let url = `${endpoint}?api_key=${API_KEY}`;
       if(genre) url += `&with_genres=${genre}`;
