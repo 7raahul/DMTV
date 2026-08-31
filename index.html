@@ -2215,103 +2215,140 @@ header .search-wrap,header .nav-actions{display:none!important}
 
 
 
-<style id="cinevo-mobile-trending-controls-final">
+
+<style id="cinevo-mobile-trending-structure-final">
 @media (max-width:700px){
 
-  /* Keep the carousel indicators INSIDE the 16:9 backdrop,
-     bottom-right. They never occupy the information panel. */
+  /* The hero/backdrop is the only home of the carousel dots. */
   #trendingBox .trend-visual{
     position:relative !important;
+    width:100% !important;
+    aspect-ratio:16/9 !important;
+    overflow:hidden !important;
   }
 
+  #trendingBox .trend-bg{
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+  }
+
+  /* Poster stays layered over the lower-left of the backdrop. */
+  #trendingBox .trend-poster{
+    position:absolute !important;
+    z-index:4 !important;
+    left:12px !important;
+    bottom:12px !important;
+    width:76px !important;
+    height:114px !important;
+    object-fit:cover !important;
+    border-radius:8px !important;
+    box-shadow:0 8px 22px rgba(0,0,0,.5) !important;
+  }
+
+  /* Dots: bottom-right INSIDE backdrop. */
   #trendingBox .trend-visual .trend-dots{
     position:absolute !important;
     right:12px !important;
-    left:auto !important;
     bottom:10px !important;
-    z-index:20 !important;
+    left:auto !important;
+    top:auto !important;
+    z-index:10 !important;
+    width:auto !important;
+    height:10px !important;
     display:flex !important;
     align-items:center !important;
     justify-content:flex-end !important;
     gap:5px !important;
-    width:auto !important;
-    max-width:calc(100% - 24px) !important;
     margin:0 !important;
+    padding:0 !important;
     pointer-events:none !important;
   }
 
-  #trendingBox .trend-visual .trend-dots span,
-  #trendingBox .trend-visual .trend-dots button{
-    flex:0 0 auto !important;
+  #trendingBox .trend-visual .trend-dots > *{
+    flex:0 0 5px !important;
     width:5px !important;
     height:5px !important;
     min-width:5px !important;
     min-height:5px !important;
-    padding:0 !important;
     margin:0 !important;
+    padding:0 !important;
     border:0 !important;
     border-radius:50% !important;
-    background:rgba(255,255,255,.45) !important;
+    background:rgba(255,255,255,.55) !important;
     box-shadow:none !important;
   }
 
-  /* Active slide dot = IMDb yellow. */
-  #trendingBox .trend-visual .trend-dots .active,
-  #trendingBox .trend-visual .trend-dots .active-dot,
-  #trendingBox .trend-visual .trend-dots [aria-current="true"]{
+  /* Common active-state selectors, all IMDb yellow. */
+  #trendingBox .trend-visual .trend-dots > .active,
+  #trendingBox .trend-visual .trend-dots > .active-dot,
+  #trendingBox .trend-visual .trend-dots > .is-active,
+  #trendingBox .trend-visual .trend-dots > [aria-current="true"]{
     background:#F5C518 !important;
     opacity:1 !important;
   }
 
-  /* If the current implementation uses a dot element with an active
-     state class on the dot itself, preserve yellow. */
-  #trendingBox .trend-visual .trend-dots .active-dot,
-  #trendingBox .trend-visual .trend-dots .is-active{
-    background:#F5C518 !important;
-  }
-
-  /* Information panel gets its own relative coordinate system. */
+  /* Information panel is a separate positioning context. */
   #trendingBox .trend-content{
     position:relative !important;
-    padding:14px 58px 18px 13px !important;
-    min-height:150px !important;
+    z-index:5 !important;
+    width:100% !important;
+    min-height:0 !important;
+    box-sizing:border-box !important;
+    padding:14px 88px 16px 100px !important;
+    background:#10131a !important;
   }
 
-  /* < > belongs to the TOP-RIGHT of the name/info box,
-     not the backdrop and not the dots area. */
+  /* Put < > at the TOP-RIGHT of the information panel. */
   #trendingBox .trend-content .trend-arrow{
     position:absolute !important;
     top:10px !important;
     bottom:auto !important;
-    z-index:15 !important;
-    width:32px !important;
-    height:32px !important;
-    min-width:32px !important;
-    min-height:32px !important;
+    z-index:20 !important;
+    width:30px !important;
+    height:30px !important;
+    min-width:30px !important;
+    min-height:30px !important;
     margin:0 !important;
+    padding:0 !important;
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
-    border-radius:9px !important;
+    border-radius:8px !important;
   }
 
   #trendingBox .trend-content .trend-prev{
-    right:47px !important;
+    right:46px !important;
+    left:auto !important;
   }
 
   #trendingBox .trend-content .trend-next{
     right:9px !important;
+    left:auto !important;
   }
 
-  /* No carousel dots below View Details. */
+  /* Never render the old dots in the information panel. */
   #trendingBox .trend-content .trend-dots{
     display:none !important;
   }
 
-  /* View Details stays clear of every carousel control. */
+  /* Keep title/meta/overview inside the information column and away from arrows. */
+  #trendingBox .trend-content .trend-type,
+  #trendingBox .trend-content .trend-title,
+  #trendingBox .trend-content .trend-meta,
+  #trendingBox .trend-content .trend-overview{
+    max-width:100% !important;
+  }
+
+  #trendingBox .trend-content .trend-title{
+    padding-right:0 !important;
+  }
+
   #trendingBox .trend-content .trend-btn{
     position:relative !important;
-    z-index:4 !important;
+    z-index:6 !important;
     margin-top:10px !important;
     margin-bottom:0 !important;
   }
