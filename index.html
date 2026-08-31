@@ -1782,6 +1782,190 @@ header{
 }
 </style>
 
+
+<style id="cinevo-mobile-final-layout">
+@media (max-width:700px){
+
+  /* Mobile header: CINEVO -> navigation */
+  body{
+    padding-bottom:82px;
+  }
+
+  header{
+    padding-bottom:10px !important;
+  }
+
+  /* Keep the existing search in the mobile navigation flow if present. */
+  header .logo,
+  header .brand,
+  header .site-logo{
+    display:block !important;
+  }
+
+  /* Mobile Browse-by block remains before the content-type buttons. */
+  .global-media-filter{
+    margin:10px 0 4px !important;
+    padding:0 14px !important;
+    display:flex !important;
+    justify-content:flex-start !important;
+    gap:8px !important;
+  }
+
+  .global-media-btn{
+    min-height:42px !important;
+    padding:8px 18px !important;
+    border-radius:12px !important;
+    font-size:12px !important;
+  }
+
+  /* Trending becomes a normal portrait-card list on mobile.
+     No backdrop overlay/side-image is used here. */
+  #trendingContainer{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:12px !important;
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  #trendingContainer .trending-card,
+  #trendingContainer .trending-recommendation,
+  #trendingContainer .trending-feature,
+  #trendingContainer .trending-hero{
+    display:flex !important;
+    flex-direction:column !important;
+    position:relative !important;
+    width:100% !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+    border-radius:14px !important;
+  }
+
+  #trendingContainer .trending-card img,
+  #trendingContainer .trending-recommendation img,
+  #trendingContainer .trending-feature img,
+  #trendingContainer .trending-hero img{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:2/3 !important;
+    object-fit:cover !important;
+    object-position:center !important;
+    transform:none !important;
+    border-radius:0 !important;
+    flex:none !important;
+  }
+
+  #trendingContainer .trending-card .trending-content,
+  #trendingContainer .trending-card .content,
+  #trendingContainer .trending-recommendation .trending-content,
+  #trendingContainer .trending-recommendation .content,
+  #trendingContainer .trending-feature .trending-content,
+  #trendingContainer .trending-hero .trending-content{
+    position:relative !important;
+    inset:auto !important;
+    width:100% !important;
+    min-height:0 !important;
+    margin:0 !important;
+    padding:11px 12px 13px !important;
+    background:var(--card,#11151c) !important;
+    flex:none !important;
+  }
+
+  #trendingContainer .trending-card .trending-content *,
+  #trendingContainer .trending-card .content *,
+  #trendingContainer .trending-recommendation .trending-content *,
+  #trendingContainer .trending-recommendation .content *,
+  #trendingContainer .trending-feature .trending-content *,
+  #trendingContainer .trending-hero .trending-content{
+    max-width:100% !important;
+  }
+
+  #trendingContainer .trending-card h1,
+  #trendingContainer .trending-card h2,
+  #trendingContainer .trending-card h3,
+  #trendingContainer .trending-recommendation h1,
+  #trendingContainer .trending-recommendation h2,
+  #trendingContainer .trending-recommendation h3{
+    font-size:15px !important;
+    line-height:1.2 !important;
+    margin:0 0 7px !important;
+  }
+
+  #trendingContainer .trending-card p,
+  #trendingContainer .trending-recommendation p{
+    font-size:11px !important;
+    line-height:1.35 !important;
+    margin:3px 0 !important;
+  }
+
+  /* Hide the large desktop-style trending controls on mobile;
+     the card remains clickable through the existing handlers. */
+  #trendingContainer .trending-card .trending-arrows,
+  #trendingContainer .trending-card .carousel-controls,
+  #trendingContainer .trending-recommendation .trending-arrows{
+    position:absolute !important;
+    right:7px !important;
+    bottom:7px !important;
+  }
+
+  /* Bottom mobile navigation */
+  #cinevoMobileNav{
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    z-index:99999 !important;
+    display:grid !important;
+    grid-template-columns:repeat(4,1fr) !important;
+    height:74px !important;
+    padding:6px 8px max(6px,env(safe-area-inset-bottom)) !important;
+    background:rgba(13,18,27,.98) !important;
+    border-top:1px solid var(--border,#252c38) !important;
+    box-sizing:border-box !important;
+  }
+
+  #cinevoMobileNav button{
+    min-width:0 !important;
+    border:0 !important;
+    background:transparent !important;
+    color:#c7ccd5 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:3px !important;
+    font-size:11px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+  }
+
+  #cinevoMobileNav .mobile-nav-icon{
+    font-size:23px !important;
+    line-height:1 !important;
+  }
+
+  #cinevoMobileNav button:first-child{
+    color:#f5c518 !important;
+  }
+}
+
+@media (max-width:390px){
+  #trendingContainer{
+    grid-template-columns:1fr !important;
+  }
+  #cinevoMobileNav button{
+    font-size:10px !important;
+  }
+  #cinevoMobileNav .mobile-nav-icon{
+    font-size:21px !important;
+  }
+}
+</style>
+
 </head>
 
 <body>
@@ -1911,7 +2095,7 @@ header{
 <div id="timelinePage" class="page-overlay hidden">
   <div class="page-shell">
     <div class="page-head">
-      <div><h1>Timeline</h1><p>Watched and scheduled titles in one place.</p></div>
+      <div><h1>Watch Journey</h1><p>Watched and scheduled titles in one place.</p></div>
       <button class="close" id="closeTimeline">×</button>
     </div>
     <div class="timeline-columns">
@@ -4460,6 +4644,61 @@ window.openRandomPage=openRandomPage;
   window.addEventListener("resize",fixMobileTrending);
   new MutationObserver(function(){fixMobileTrending()})
     .observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+
+
+<script id="cinevo-mobile-final-js">
+(function(){
+  function mobileTrending(){
+    if(window.innerWidth > 700) return;
+
+    const root =
+      document.getElementById("trendingContainer") ||
+      document.getElementById("trendingCard");
+
+    if(!root) return;
+
+    root.querySelectorAll(
+      ".trending-card,.trending-recommendation,.trending-feature,.trending-hero"
+    ).forEach(function(card){
+      const img = card.querySelector("img");
+      if(!img) return;
+
+      const content = card.querySelector(
+        ".trending-content,.content,.trending-info,.hero-content"
+      );
+
+      card.style.setProperty("display","flex","important");
+      card.style.setProperty("flex-direction","column","important");
+      card.style.setProperty("position","relative","important");
+      card.style.setProperty("height","auto","important");
+      card.style.setProperty("overflow","hidden","important");
+
+      img.style.setProperty("position","relative","important");
+      img.style.setProperty("inset","auto","important");
+      img.style.setProperty("width","100%","important");
+      img.style.setProperty("height","auto","important");
+      img.style.setProperty("aspect-ratio","2 / 3","important");
+      img.style.setProperty("object-fit","cover","important");
+      img.style.setProperty("transform","none","important");
+
+      if(content){
+        content.style.setProperty("position","relative","important");
+        content.style.setProperty("inset","auto","important");
+        content.style.setProperty("width","100%","important");
+        content.style.setProperty("margin","0","important");
+        content.style.setProperty("background","var(--card,#11151c)","important");
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", mobileTrending);
+  window.addEventListener("resize", mobileTrending);
+
+  new MutationObserver(function(){
+    if(window.innerWidth <= 700) mobileTrending();
+  }).observe(document.body,{childList:true,subtree:true});
 })();
 </script>
 
