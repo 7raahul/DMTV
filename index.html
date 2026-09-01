@@ -1654,121 +1654,79 @@ header{
 .trending-error strong{color:#f1f5f9;font-size:18px}
 .trending-error span{color:#94a3b8;max-width:620px}
 .trending-error .pick-btn{margin-top:8px}
+/* SEARCH BY PANEL */
+.search-wrap{
+  position:relative;
+}
 
-/* SEARCH-BY / MOBILE DISCOVERY */
 .search-by-panel{
-  margin-top:8px;
-  padding:11px;
-  background:#11141b;
+  position:absolute;
+  top:calc(100% + 7px);
+  left:0;
+  right:0;
+  z-index:5000;
+
+  background:#12161d;
+  border:1px solid #303641;
+  border-radius:12px;
+  padding:12px;
+
+  box-shadow:0 18px 45px rgba(0,0,0,.55);
+}
+
+.search-by-title{
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:1px;
+  margin-bottom:9px;
+}
+
+.search-by-type{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:6px;
+}
+
+.search-type-btn{
   border:1px solid var(--border);
-  border-radius:13px;
-  box-shadow:0 18px 40px rgba(0,0,0,.28);
+  background:#181d25;
+  color:#dce1e7;
+  border-radius:8px;
+  padding:8px 5px;
+  font-size:11px;
+  font-weight:700;
+  cursor:pointer;
 }
-.search-by-panel .browse-label{display:block;margin:0 0 8px}
-.search-by-type-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
-.type-tab{border:1px solid #2a303b;background:#181c25;color:#cfd4db;border-radius:8px;padding:8px 6px;font-size:11px;font-weight:750}
-.type-tab.active{background:#e8eaed;color:#080a0e;border-color:#e8eaed}
-.search-by-filters{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.search-by-filters .filter-btn{width:100%;min-width:0}
-.search-by-filters .filter:last-of-type{grid-column:1/-1}
-.search-by-filters .apply-btn{width:100%;grid-column:1/-1}
-.infinite-loader{display:flex;align-items:center;justify-content:center;gap:10px;padding:24px;color:var(--muted);font-size:12px}
-.infinite-loader .spinner{width:20px;height:20px;margin:0}
-#loadSentinel{height:2px;width:100%}
-@media(min-width:851px){
-  .search-by-panel{position:absolute;left:0;right:0;top:calc(100% + 7px);display:none}
-  .search-wrap:focus-within .search-by-panel{display:block}
-  .search-wrap{max-width:430px}
+
+.search-type-btn.active{
+  background:#e8eaed;
+  color:#080a0e;
+  border-color:#e8eaed;
 }
-@media(max-width:850px){
-  header{position:relative}
-  .search-by-panel{display:block}
-  .search-suggestions{z-index:5001}
+
+.search-by-hint{
+  margin-top:9px;
+  color:#737b88;
+  font-size:10px;
+  line-height:1.4;
 }
+
 @media(max-width:600px){
-  .search-by-filters{grid-template-columns:1fr 1fr}
+
+  .search-by-panel{
+    padding:11px;
+  }
+
+  .search-by-type{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .search-type-btn{
+    padding:9px 6px;
+  }
+
 }
-@media(max-width:390px){
-  .search-by-panel{padding:9px}
-  .type-tab,.search-by-filters .filter-btn,.search-by-filters .apply-btn{font-size:10px}
-}
-
-/* TRENDING MOBILE: backdrop stays original TMDB landscape image; content never collides with controls. */
-@media(max-width:600px){
-  .trending{min-height:430px;height:430px;border-radius:18px}
-  .trend-slide{min-height:430px}
-  .trend-bg{width:100%;height:100%;right:0;object-position:center top}
-  .trend-overlay{inset:0;width:100%;background:linear-gradient(90deg,rgba(8,10,14,.98) 0%,rgba(8,10,14,.90) 48%,rgba(8,10,14,.28) 100%),linear-gradient(0deg,rgba(8,10,14,.98) 0%,rgba(8,10,14,.15) 62%,rgba(8,10,14,.05) 100%)}
-  .trend-content{width:100%;min-height:430px;height:430px;padding:24px 18px 78px;justify-content:flex-end}
-  .trend-type{margin-bottom:7px}
-  .trend-title{font-size:27px;line-height:1.05;margin-bottom:9px;max-width:70%}
-  .trend-meta{gap:7px;margin-bottom:9px;font-size:12px;max-width:75%}
-  .trend-overview{font-size:12px;line-height:1.45;-webkit-line-clamp:2;max-width:78%}
-  .trend-btn{margin-top:12px;padding:9px 13px;font-size:12px}
-  .trend-dots{left:18px;bottom:18px;right:130px;overflow:hidden;max-width:calc(100% - 155px);height:9px}
-  .trend-arrow{display:flex;align-items:center;justify-content:center;width:32px;height:32px;padding:0;bottom:10px;top:auto;transform:none;font-size:18px}
-  .trend-prev{right:54px;left:auto}
-  .trend-next{right:14px}
-}
-
-/* FINAL MOBILE/UI OVERRIDES */
-
-/* Search controls live inside the search field container; no separate Browse section. */
-.search-wrap{position:relative}
-.search-by-panel{box-sizing:border-box;width:100%}
-
-/* Trending: original TMDB backdrop remains landscape; text and controls have dedicated zones. */
-@media(max-width:600px){
-  .trending{height:410px;min-height:410px;overflow:hidden}
-  .trend-slide{height:410px;min-height:410px}
-  .trend-bg{
-    left:auto;right:0;top:0;width:48%;height:100%;
-    object-fit:cover;object-position:center center;
-  }
-  .trend-overlay{
-    left:0;top:0;width:72%;height:100%;
-    background:linear-gradient(90deg,#10131a 0%,rgba(16,19,26,.98) 62%,rgba(16,19,26,.78) 100%);
-  }
-  .trend-content{
-    box-sizing:border-box;width:68%;height:410px;min-height:410px;
-    padding:24px 12px 64px 16px;
-    justify-content:flex-end;
-  }
-  .trend-type{font-size:10px;margin-bottom:6px}
-  .trend-title{
-    font-size:25px;line-height:1.05;letter-spacing:-.7px;
-    margin:0 0 8px;max-width:100%;
-    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  }
-  .trend-meta{font-size:11px;gap:6px;margin-bottom:7px;max-width:100%}
-  .trend-overview{
-    font-size:11px;line-height:1.4;max-width:100%;
-    -webkit-line-clamp:2;margin:0;
-  }
-  .trend-btn{margin-top:10px;padding:8px 12px;font-size:11px}
-  .trend-dots{
-    left:16px;right:118px;bottom:14px;
-    max-width:calc(100% - 134px);height:9px;
-    overflow:hidden;
-  }
-  .trend-arrow{
-    bottom:9px;top:auto;transform:none;width:32px;height:32px;
-    display:flex;align-items:center;justify-content:center;
-  }
-  .trend-prev{right:54px;left:auto}
-  .trend-next{right:14px}
-}
-
-/* Never show old pagination controls. Infinite scroll owns result loading. */
-#pagination,.pagination{display:none!important}
-
-/* Infinite loading has breathing room and never overlays cards. */
-.infinite-loader{min-height:26px;box-sizing:border-box}
-#loadSentinel{height:1px}
-
-/* Back-to-top only after the page has actually been scrolled. */
-.to-top{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s,visibility .2s}
-.to-top.visible{opacity:1;visibility:visible;pointer-events:auto}
 </style>
 </head>
 
@@ -1779,41 +1737,46 @@ header{
     <div class="logo">Cine<span>Vo</span></div>
 
     <div class="search-wrap">
-      <span class="search-icon">⌕</span>
-      <input id="searchInput" class="search" type="search" autocomplete="off"
-             placeholder="Search movies & TV shows...">
-      <div id="searchSuggestions" class="search-suggestions hidden"></div>
+  <span class="search-icon">⌕</span>
 
-      <div class="search-by-panel" id="searchByPanel">
-        <div class="browse-label">SEARCH BY</div>
+  <input
+    id="searchInput"
+    class="search"
+    type="search"
+    autocomplete="off"
+    placeholder="Search movies, TV shows, people..."
+  >
 
-        <div class="search-by-type-tabs" aria-label="Media type">
-          <button type="button" class="type-tab active" data-type="all">All</button>
-          <button type="button" class="type-tab" data-type="movie">Movies</button>
-          <button type="button" class="type-tab" data-type="tv">TV Shows</button>
-        </div>
+  <div id="searchByPanel" class="search-by-panel hidden">
 
-        <div class="search-by-filters">
-          <div class="filter" data-filter="year">
-            <button class="filter-btn" type="button"><span id="yearLabel">All Years</span><span>⌄</span></button>
-            <div class="filter-menu hidden"></div>
-          </div>
-          <div class="filter" data-filter="popular">
-            <button class="filter-btn" type="button"><span id="popularLabel">Popular</span><span>⌄</span></button>
-            <div class="filter-menu hidden"></div>
-          </div>
-          <div class="filter" data-filter="genre">
-            <button class="filter-btn" type="button"><span id="genreLabel">All Genres</span><span>⌄</span></button>
-            <div class="filter-menu hidden"></div>
-          </div>
-          <div class="filter" data-filter="country">
-            <button class="filter-btn" type="button"><span id="countryLabel">All Countries</span><span>⌄</span></button>
-            <div class="filter-menu hidden"></div>
-          </div>
-          <button class="apply-btn" id="applyFilters" type="button">APPLY</button>
-        </div>
-      </div>
+    <div class="search-by-title">SEARCH BY</div>
+
+    <div class="search-by-type">
+      <button type="button" class="search-type-btn active" data-search-type="all">
+        All
+      </button>
+
+      <button type="button" class="search-type-btn" data-search-type="movie">
+        Movies
+      </button>
+
+      <button type="button" class="search-type-btn" data-search-type="tv">
+        TV Shows
+      </button>
+
+      <button type="button" class="search-type-btn" data-search-type="person">
+        People
+      </button>
     </div>
+
+    <div class="search-by-hint">
+      Search by movie, TV show, actor, actress or director
+    </div>
+
+  </div>
+
+  <div id="searchSuggestions" class="search-suggestions hidden"></div>
+</div>
 
     <div class="nav-actions">
       <button class="nav-btn" id="timelineBtn">◈ Timeline</button>
@@ -1827,12 +1790,65 @@ header{
   <!-- TRENDING -->
   <section class="section">
     <h1 class="section-title">Trending Recommendations</h1>
-    <p class="section-subtitle">Movies & TV Shows</p>
+    <p class="section-subtitle">Movies & Tv Shows</p>
 
     <div id="trendingBox" class="trending">
       <div class="loading">
         <div class="spinner"></div>
         Loading trending...
+      </div>
+    </div>
+  </section>
+
+  <!-- BROWSE -->
+  <section class="section">
+    <div class="browse-box">
+      <div class="browse-row">
+
+        <div class="browse-label">BROWSE BY</div>
+
+        <div class="filter" data-filter="type">
+          <button class="filter-btn">
+            <span id="typeLabel">Movies & TV Shows</span>
+            <span>⌄</span>
+          </button>
+          <div class="filter-menu hidden"></div>
+        </div>
+
+        <div class="filter" data-filter="year">
+          <button class="filter-btn">
+            <span id="yearLabel">All Years</span>
+            <span>⌄</span>
+          </button>
+          <div class="filter-menu hidden"></div>
+        </div>
+
+        <div class="filter" data-filter="popular">
+          <button class="filter-btn">
+            <span id="popularLabel">Popular</span>
+            <span>⌄</span>
+          </button>
+          <div class="filter-menu hidden"></div>
+        </div>
+
+        <div class="filter" data-filter="genre">
+          <button class="filter-btn">
+            <span id="genreLabel">All Genres</span>
+            <span>⌄</span>
+          </button>
+          <div class="filter-menu hidden"></div>
+        </div>
+
+        <div class="filter" data-filter="country">
+          <button class="filter-btn">
+            <span id="countryLabel">All Countries</span>
+            <span>⌄</span>
+          </button>
+          <div class="filter-menu hidden"></div>
+        </div>
+
+        <button class="apply-btn" id="applyFilters">APPLY</button>
+
       </div>
     </div>
   </section>
@@ -1848,11 +1864,7 @@ header{
 
     <div id="results" class="grid"></div>
 
-    <div id="infiniteLoader" class="infinite-loader hidden">
-      <div class="spinner"></div>
-      Loading more…
-    </div>
-    <div id="loadSentinel" aria-hidden="true"></div>
+    <div id="pagination" class="pagination"></div>
   </section>
 
 
@@ -1999,9 +2011,6 @@ const STILL_SIZE = "w780";
 const state = {
   page: 1,
   currentResults: [],
-  loadingMore: false,
-  hasMore: true,
-  browseRequestId: 0,
   currentDetail: null,
   currentSeason: null,
 
@@ -2527,9 +2536,10 @@ function buildFilterMenu(type,menu){
 function updateFilterLabels(){
   const f = state.filters;
 
-  document.querySelectorAll(".type-tab").forEach(tab=>{
-    tab.classList.toggle("active",tab.dataset.type === f.type);
-  });
+  document.getElementById("typeLabel").textContent =
+    f.type === "movie" ? "Movies" :
+    f.type === "tv" ? "TV Shows" :
+    "Movies & TV Shows";
 
   document.getElementById("yearLabel").textContent =
     f.year || "All Years";
@@ -2584,23 +2594,6 @@ function discoverParams(type,page,extra={}){
     params.with_origin_country = state.filters.country;
   }
 
-  /* Relative popularity modes also constrain the release/air-date window. */
-  if(state.filters.popular === "today" || state.filters.popular === "month"){
-    const now = new Date();
-    const start = new Date(now);
-    if(state.filters.popular === "today") start.setDate(now.getDate() - 1);
-    else start.setDate(now.getDate() - 30);
-    const iso = d => d.toISOString().slice(0,10);
-    if(type === "movie"){
-      params.primary_release_date_gte = iso(start);
-      params.primary_release_date_lte = iso(now);
-    }else{
-      params.first_air_date_gte = iso(start);
-      params.first_air_date_lte = iso(now);
-    }
-    params.sort_by = "popularity.desc";
-  }
-
   if(state.filters.popular === "high"){
     params.sort_by = "vote_average.desc";
     params.vote_count_gte = 200;
@@ -2647,23 +2640,8 @@ async function fetch50(type,appPage){
   return collected.slice(0,50);
 }
 
-async function loadBrowse({reset=false}={}){
-  /* Never let an observer tick invalidate the request currently loading. */
-  if(!reset && (state.loadingMore || !state.hasMore)) return;
-
-  const requestId = ++state.browseRequestId;
-
-  if(reset){
-    state.page = 1;
-    state.currentResults = [];
-    state.hasMore = true;
-    state.loadingMore = false;
-    showResultsLoading();
-  }
-
-  if(state.loadingMore || !state.hasMore) return;
-  state.loadingMore = true;
-  setInfiniteLoading(true);
+async function loadBrowse(){
+  showResultsLoading();
 
   try{
     let items = [];
@@ -2675,47 +2653,59 @@ async function loadBrowse({reset=false}={}){
         fetch50("movie",state.page),
         fetch50("tv",state.page)
       ]);
-      items = uniqueItems([...movies,...tv])
-        .sort((a,b)=>Number(b.popularity||0)-Number(a.popularity||0))
+
+      items = uniqueItems([...movies,...tv]);
+
+      /*
+        Keep exactly up to 50 unique items.
+        Movies and TV are mixed.
+      */
+      items = items
+        .sort((a,b)=>
+          Number(b.popularity||0)-Number(a.popularity||0)
+        )
         .slice(0,50);
     }else{
       items = await fetch50(state.filters.type,state.page);
     }
 
-    if(requestId !== state.browseRequestId) return;
-
-    items = uniqueAgainst(uniqueItems(items),state.currentResults);
-    if(!items.length){
-      state.hasMore = false;
-    }else{
-      state.currentResults = uniqueItems([...state.currentResults,...items]);
-      state.page += 1;
-    }
+    state.currentResults = uniqueItems(items);
 
     renderResults();
+
+    updatePagination();
+
   }catch(error){
     console.error(error);
-    if(reset){
-      document.getElementById("results").innerHTML = `
-        <div class="empty" style="grid-column:1/-1">
-          Unable to load results. Please try again.
-        </div>`;
-    }
-    state.hasMore = false;
-  }finally{
-    if(requestId === state.browseRequestId){
-      state.loadingMore = false;
-      setInfiniteLoading(false);
-    }
+
+    document.getElementById("results").innerHTML = `
+      <div class="empty" style="grid-column:1/-1">
+        Unable to load results. Please try again.
+      </div>
+    `;
+
+    document.getElementById("pagination").innerHTML = "";
   }
 }
 
 async function loadBollywood(type,page){
-  const types = type === "all" ? ["movie","tv"] : [type];
+  /*
+    Bollywood custom filter:
+    Hindi language + India origin/keyword-style discovery.
+  */
+
+  const types = type === "all"
+    ? ["movie","tv"]
+    : [type];
+
   let all = [];
 
   for(const currentType of types){
-    const endpoint = currentType === "movie" ? "/discover/movie" : "/discover/tv";
+    const endpoint =
+      currentType === "movie"
+        ? "/discover/movie"
+        : "/discover/tv";
+
     const params = {
       page,
       with_original_language:"hi",
@@ -2724,12 +2714,21 @@ async function loadBollywood(type,page){
     };
 
     if(state.filters.year){
-      if(currentType === "movie") params.primary_release_year = state.filters.year;
-      else params.first_air_date_year = state.filters.year;
+      if(currentType === "movie"){
+        params.primary_release_year = state.filters.year;
+      }else{
+        params.first_air_date_year = state.filters.year;
+      }
     }
 
     const data = await api(endpoint,params);
-    all.push(...(data.results || []).map(item=>({...item,media_type:currentType})));
+
+    all.push(
+      ...(data.results || []).map(item=>({
+        ...item,
+        media_type:currentType
+      }))
+    );
   }
 
   return uniqueItems(all).slice(0,50);
@@ -2740,23 +2739,21 @@ function showResultsLoading(){
     <div class="loading" style="grid-column:1/-1">
       <div class="spinner"></div>
       Loading...
-    </div>`;
-  setInfiniteLoading(true);
-}
+    </div>
+  `;
 
-function setInfiniteLoading(show){
-  const loader=document.getElementById("infiniteLoader");
-  if(!loader) return;
-  loader.classList.toggle("hidden",!show);
+  document.getElementById("pagination").innerHTML = "";
 }
 
 function renderResults(){
   const results = document.getElementById("results");
 
   document.getElementById("resultsTitle").textContent =
-    state.filters.type === "movie" ? "Movies" :
-    state.filters.type === "tv" ? "TV Shows" :
-    "Movies & TV Shows";
+    state.filters.type === "movie"
+      ? "Movies"
+      : state.filters.type === "tv"
+        ? "TV Shows"
+        : "Movies & TV Shows";
 
   document.getElementById("resultsCount").textContent =
     `${state.currentResults.length} unique results`;
@@ -2765,7 +2762,8 @@ function renderResults(){
     results.innerHTML = `
       <div class="empty" style="grid-column:1/-1">
         No results found.
-      </div>`;
+      </div>
+    `;
     return;
   }
 
@@ -2779,49 +2777,121 @@ function renderResults(){
                onclick="openDetails(${item.id},'${type}')"
                onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetails(${item.id},'${type}')}"
                aria-label="Open ${esc(title)} details">
+
         <div class="poster-wrap">
-          <img class="poster" src="${image(item.poster_path)}" alt="${esc(title)}" loading="lazy">
-          <div class="poster-type">${type === "tv" ? "TV SHOW" : "MOVIE"}</div>
+          <img class="poster"
+               src="${image(item.poster_path)}"
+               alt="${esc(title)}"
+               loading="lazy">
+
+          <div class="poster-type">
+            ${type === "tv" ? "TV SHOW" : "MOVIE"}
+          </div>
         </div>
+
         <div class="card-body">
-          <div class="card-title" title="${esc(title)}">${esc(title)}</div>
+
+          <div class="card-title" title="${esc(title)}">
+            ${esc(title)}
+          </div>
+
           <div class="card-meta">
-            <span class="card-date">${esc(formatDate(date))}</span>
-            <span class="card-rating">★ ${Number(item.vote_average||0).toFixed(1)}</span>
+            <span class="card-date">
+              ${esc(formatDate(date))}
+            </span>
+
+            <span class="card-rating">
+              ★ ${Number(item.vote_average||0).toFixed(1)}
+            </span>
           </div>
+
           <div class="card-actions">
-            <button class="details-btn" onclick="event.stopPropagation();openDetails(${item.id},'${type}')">View Details</button>
-            <button class="quick-btn ${isMarked('watched',type,item.id)?'marked':''}" data-track-action="watched" data-track-type="${type}" data-track-id="${item.id}" title="Mark watched" onclick="handleTrackClick(event,'watched','${type}',${item.id})">✓</button>
-            <button class="quick-btn ${isMarked('scheduled',type,item.id)?'marked':''}" data-track-action="scheduled" data-track-type="${type}" data-track-id="${item.id}" title="Schedule to watch" onclick="handleTrackClick(event,'scheduled','${type}',${item.id})">📅</button>
+            <button class="details-btn"
+                    onclick="event.stopPropagation();openDetails(${item.id},'${type}')">
+              View Details
+            </button>
+
+            <button class="quick-btn ${isMarked('watched',type,item.id)?'marked':''}"
+                    data-track-action="watched" data-track-type="${type}" data-track-id="${item.id}"
+                    title="Mark watched"
+                    onclick="handleTrackClick(event,'watched','${type}',${item.id})">
+              ✓
+            </button>
+
+            <button class="quick-btn ${isMarked('scheduled',type,item.id)?'marked':''}"
+                    data-track-action="scheduled" data-track-type="${type}" data-track-id="${item.id}"
+                    title="Schedule to watch"
+                    onclick="handleTrackClick(event,'scheduled','${type}',${item.id})">
+              📅
+            </button>
           </div>
+
         </div>
-      </article>`;
+      </article>
+    `;
   }).join("");
 }
 
 /* ============================================================
-   INFINITE SCROLL
+   PAGINATION
 ============================================================ */
 
-const loadSentinel = document.getElementById("loadSentinel");
-if(loadSentinel && "IntersectionObserver" in window){
-  const infiniteObserver = new IntersectionObserver(entries=>{
-    if(entries.some(entry=>entry.isIntersecting)){
-      loadBrowse();
-    }
-  },{root:null,rootMargin:"900px 0px 900px 0px",threshold:0});
-  infiniteObserver.observe(loadSentinel);
-}else{
-  window.addEventListener("scroll",()=>{
-    if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 900){
-      loadBrowse();
-    }
-  },{passive:true});
+function updatePagination(){
+  const box = document.getElementById("pagination");
+
+  /*
+    We deliberately don't display total pages.
+    Only previous, nearby page numbers and next.
+  */
+
+  let html = "";
+
+  if(state.page > 1){
+    html += `
+      <button class="page-btn"
+              onclick="goPage(${state.page-1})">
+        ← Previous
+      </button>
+    `;
+  }
+
+  const start = Math.max(1,state.page-2);
+  const end = state.page+2;
+
+  for(let p=start;p<=end;p++){
+    html += `
+      <button class="page-btn ${p===state.page?"active":""}"
+              onclick="goPage(${p})">
+        ${p}
+      </button>
+    `;
+  }
+
+  html += `
+    <button class="page-btn"
+            onclick="goPage(${state.page+1})">
+      Next →
+    </button>
+  `;
+
+  box.innerHTML = html;
 }
 
-async function goPage(){
-  /* Kept only for backwards compatibility with old saved onclicks. */
+async function goPage(page){
+  if(page < 1) return;
+
+  state.page = page;
+
   await loadBrowse();
+
+  /*
+    Pagination changes don't produce the old
+    scroll-for-more glitch.
+  */
+  window.scrollTo({
+    top:document.querySelector(".section").offsetTop - 75,
+    behavior:"smooth"
+  });
 }
 
 /* ============================================================
@@ -4247,9 +4317,12 @@ document.getElementById("toTop")?.addEventListener("click",()=>{
   });
 
 window.addEventListener("scroll",()=>{
-  const btn=document.getElementById("toTop");
-  if(btn) btn.classList.toggle("visible",window.scrollY>450);
-},{passive:true});
+  const btn = document.getElementById("toTop");
+
+  if(btn){
+    btn.style.opacity = window.scrollY > 450 ? "1" : ".35";
+  }
+});
 
 /* ============================================================
    APPLY FILTERS
@@ -4258,19 +4331,21 @@ window.addEventListener("scroll",()=>{
 document.getElementById("applyFilters")
   .addEventListener("click",()=>{
     document.querySelectorAll(".filter-menu").forEach(m=>m.classList.add("hidden"));
+    /*
+      Search input is cleared so Browse mode
+      isn't mixed with search mode.
+    */
     document.getElementById("searchInput").value = "";
-    loadBrowse({reset:true});
-    document.getElementById("results")?.scrollIntoView({behavior:"smooth",block:"start"});
-  });
 
-document.querySelectorAll(".type-tab").forEach(tab=>{
-  tab.addEventListener("click",()=>{
-    state.filters.type = tab.dataset.type;
-    document.querySelectorAll(".type-tab").forEach(x=>{
-      x.classList.toggle("active",x.dataset.type === state.filters.type);
+    state.page = 1;
+
+    loadBrowse();
+
+    window.scrollTo({
+      top:document.querySelector(".section").offsetTop - 75,
+      behavior:"smooth"
     });
   });
-});
 
 /* ============================================================
    ESCAPE KEY
@@ -4330,7 +4405,7 @@ async function init(){
   // prevent Browse/Discover from rendering, and vice versa.
   await Promise.allSettled([
     loadTrending(),
-    loadBrowse({reset:true})
+    loadBrowse()
   ]);
 }
 
