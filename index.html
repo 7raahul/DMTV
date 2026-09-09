@@ -3417,6 +3417,12 @@ function renderDetail(details,credits,providers){
   const watchedActive = !!getWatched()[statusKey];
   const scheduledActive = !!getScheduled()[statusKey];
 
+  const ratingPct = Math.round(Number(details.vote_average || 0) * 10);
+  const ratingClass =
+    ratingPct >= 70 ? "rating-good" :
+    ratingPct >= 50 ? "rating-mid" :
+    "rating-low";
+
   const hero = document.getElementById("detailHero");
 
   hero.innerHTML = `
@@ -3433,18 +3439,19 @@ function renderDetail(details,credits,providers){
             ${type === "tv" ? "TV SHOW" : "MOVIE"}
           </div>
 
-          <div class="detail-hero-badge" aria-label="Rating">
-            <span>${Math.round(Number(details.vote_average || 0) * 10)}</span><small>%</small>
+          <div class="detail-hero-badge ${ratingClass}" aria-label="Rating">
+            <span>${ratingPct}</span><small>%</small>
           </div>
         </div>
 
         <div class="detail-hero-logo-actions-row">
           <div class="detail-logo-wrap">
+            <div class="detail-logo-skeleton" data-logo-skeleton></div>
             <img class="detail-logo"
                  data-detail-logo
                  alt="${esc(title)}"
                  style="display:none">
-            <h1 class="detail-title detail-title-fallback">${esc(title)}</h1>
+            <h1 class="detail-title detail-title-fallback" style="display:none">${esc(title)}</h1>
           </div>
 
           <div class="detail-mobile-actions">
@@ -3509,8 +3516,15 @@ async function loadDetailTmdbLogo(id,type,title){
 
   const logo = hero.querySelector("[data-detail-logo]");
   const fallback = hero.querySelector(".detail-title-fallback");
+  const skeleton = hero.querySelector("[data-logo-skeleton]");
 
   if(!logo || !fallback) return;
+
+  const finish = (showLogo)=>{
+    if(skeleton) skeleton.style.display = "none";
+    logo.style.display = showLogo ? "block" : "none";
+    fallback.style.display = showLogo ? "none" : "";
+  };
 
   try{
     const data = await api(`/${type}/${id}/images`,{
@@ -3523,22 +3537,24 @@ async function loadDetailTmdbLogo(id,type,title){
       logos.find(x=>x.file_path && x.iso_639_1==="en") ||
       logos.find(x=>x.file_path && !x.iso_639_1);
 
-    if(!selected?.file_path || !logo.isConnected) return;
+    if(!selected?.file_path || !logo.isConnected){
+      finish(false);
+      return;
+    }
 
     logo.src = image(selected.file_path,"original");
 
     logo.onload = ()=>{
       if(!logo.isConnected) return;
-      logo.style.display = "block";
-      fallback.style.display = "none";
+      finish(true);
     };
 
     logo.onerror = ()=>{
-      logo.style.display = "none";
-      fallback.style.display = "";
+      finish(false);
     };
   }catch(error){
     console.warn("Detail TMDB logo unavailable:", error);
+    finish(false);
   }
 }
 
@@ -7283,6 +7299,67 @@ body.cinevo-view-open #cinevoMobileNav{
 .te-remove.scheduled:hover{
   background:#ef4444;
   color:#1c0808;
+}
+</style>
+
+<style id="cinevo-detail-polish-fixes">
+/* Rating badge: colour reflects the score itself, like IMDb-style
+   apps — green for a strong score, amber for mixed, red for weak —
+   instead of a fixed gold ring regardless of the number. */
+#detailOverlay .detail-hero-badge.rating-good{
+  border-color:#22c55e !important;
+  color:#22c55e !important;
+  box-shadow:0 3px 12px rgba(0,0,0,.42), inset 0 0 0 1px rgba(34,197,94,.14) !important;
+}
+
+#detailOverlay .detail-hero-badge.rating-mid{
+  border-color:#f5c518 !important;
+  color:#f5c518 !important;
+}
+
+#detailOverlay .detail-hero-badge.rating-low{
+  border-color:#ef4444 !important;
+  color:#ef4444 !important;
+  box-shadow:0 3px 12px rgba(0,0,0,.42), inset 0 0 0 1px rgba(239,68,68,.14) !important;
+}
+
+/* Logo skeleton: a shimmering placeholder shown while the TMDB
+   title-logo request is in flight, so the title area doesn't pop
+   or resize once the real logo (or the text fallback) is decided. */
+#detailOverlay .detail-logo-skeleton{
+  display:block;
+  width:min(240px,60%);
+  height:44px;
+  border-radius:8px;
+  background:linear-gradient(90deg,
+    rgba(255,255,255,.06) 25%,
+    rgba(255,255,255,.16) 37%,
+    rgba(255,255,255,.06) 63%);
+  background-size:400% 100%;
+  animation:cinevoLogoShimmer 1.4s ease infinite;
+}
+
+@keyframes cinevoLogoShimmer{
+  0%{background-position:100% 50%}
+  100%{background-position:0 50%}
+}
+
+@media(min-width:701px){
+  #detailOverlay .detail-logo-skeleton{
+    width:min(320px,55%);
+    height:64px;
+  }
+}
+
+/* "Remove" state (already watched, tap to undo): a neutral, muted
+   look instead of the same green used for the positive "mark as
+   watched" action, so it reads as an undo control rather than a
+   second success state. Scheduled/red is left as-is since red
+   already reads clearly as "cancel". */
+#detailOverlay .detail-mobile-action.watched.is-active{
+  background:#232830 !important;
+  border:1px solid #3a4150 !important;
+  color:#c7cdd8 !important;
 }
 </style>
 
